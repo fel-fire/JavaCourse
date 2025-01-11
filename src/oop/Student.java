@@ -1,6 +1,8 @@
 package oop;
 
 import lombok.Getter;
+import lombok.NonNull;
+
 import java.util.ArrayList;
 
 /**
@@ -17,12 +19,13 @@ public class Student {
     /**
      * Имя.
      */
+    @Getter
     private String name;
     /**
      * Список оценок.
      */
-    @Getter
     private ArrayList<Integer> marks;
+
 
     /**
      * Конструирует объект студент из имени и множества оценок в диапазоне от 2 до 5.
@@ -30,7 +33,7 @@ public class Student {
      * @param marks множество оценок.
      * @throws IllegalArgumentException если какая-либо из оценок не входи в диапазон от 2 до 5.
      */
-    public Student(String name, int... marks) {
+    public Student(@NonNull String name, @NonNull int... marks) {
         this.marks = new ArrayList<>(marks.length);
         for (int mark : marks) {
             if (mark < 2 || mark > 5) throw new IllegalArgumentException("Оценки должны быть от 2 до 5");
@@ -38,6 +41,14 @@ public class Student {
         }
         this.name = name;
 
+    }
+
+    /**
+     * Геттер - возвращает список оценок
+     * @return список оценок ученика.
+     */
+    public ArrayList<Integer> getMarks() {
+        return new ArrayList<>(marks);
     }
 
     /**

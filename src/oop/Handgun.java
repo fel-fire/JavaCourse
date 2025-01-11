@@ -44,12 +44,6 @@ public class Handgun {
 
     }
 
-    /**
-     * Конструирует пистолет по умолчанию с полным магазином емкостью 5 патронов.
-     */
-    public Handgun() {
-        this(5, 5);
-    }
 
     /**
      * Служебный метод, проверяющий соответствие переданного значения bullets емкости магазина capacity. В случае если
@@ -58,7 +52,7 @@ public class Handgun {
      * @throws IllegalArgumentException если количество заряжаемых патронов отрицательное.
      */
     private void setValidBullets(int bullets) {
-        if (bullets < 0) throw new IllegalArgumentException("bullets must be positive");
+        if (bullets < 0) throw new IllegalArgumentException("bullets must not be negative");
         this.bullets = Math.min(bullets, capacity);
     }
 

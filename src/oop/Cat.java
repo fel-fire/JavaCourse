@@ -1,5 +1,7 @@
 package oop;
 
+import lombok.Getter;
+
 /**
  * <p>Класс <b>Cat</b> представляет реализацию животного - кота, который может помяукать
  * один или несколько раз.</p>
@@ -10,11 +12,12 @@ package oop;
  */
 
 
+@Getter
 public class Cat {
     /**
      * Имя кота
      */
-    String name;
+    final String name;
 
     /**
      * Конструирует объект класса Cat. В качестве параметра принимает строку name.

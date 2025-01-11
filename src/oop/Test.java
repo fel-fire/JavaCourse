@@ -224,7 +224,8 @@ public class Test {
     при этом у Студента всегда можно узнать список оценок.
     Продемонстрируйте на примерах, что нет способа задать Студенту некорректную оценку.*/
     public static void test_1_6_8() {
-        Student student = new Student("Petr", 2, 3, 4, 4, 5);
+        Student student = new Student("Petr", 2, 3, 4, 5 );
+        System.out.println(student.getMarks().add(345));
         System.out.println(student.getMarks());
     }
 
@@ -284,6 +285,24 @@ public class Test {
 
         System.out.println(it.getEmployeesList());
         System.out.println(tech.getEmployeesList());
+
+        tech.setManager(employee1);
+        it.setManager(employee3);
+
+        System.out.println(it.getEmployeesList());
+        System.out.println(tech.getEmployeesList());
+
+        System.out.println(employee1);
+        System.out.println(employee2);
+        System.out.println(employee3);
+        System.out.println(employee4);
+        System.out.println(employee);
+
+        System.out.println(employee4);
+        System.out.println(employee6);
+        System.out.println(employee7);
+        System.out.println(employee8);
+        System.out.println(employee);
 
         System.out.println(it);
         System.out.println(tech);

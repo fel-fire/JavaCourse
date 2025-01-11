@@ -58,14 +58,13 @@ public class Name {
     public Name(String firstName, String lastName) {
         this(firstName, lastName, "");
     }
+
     /**
      * Копирующий конструктор.
      * @param name объект, копию которого необходимо создать.
      */
     Name(Name name) {
-        firstName = name.getFirstName();
-        lastName = name.getLastName();
-        patronymic = name.getPatronymic();
+       this(name.getFirstName(), name.getLastName(), name.getPatronymic());
     }
     /**
      * Метод возвращает строковое представление объекта

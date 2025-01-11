@@ -1,6 +1,9 @@
 package oop;
 
+import lombok.NonNull;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * <p>Класс <b>Polyline</b> представляет реализацию ломаной линии
@@ -20,28 +23,26 @@ public class Polyline {
     /**
      * Список точек, из которых состоит ломаная линия
      */
-    private ArrayList<Point> points = new ArrayList<>();
+    private ArrayList<Point> points;
 
     /**
      * Конструирует ломаную линию из множества точек, переданных в качестве аргумента.
      * @param points множество точек с координатами {x : y}: Point
      */
-    public Polyline(Point... points) {
-        if (points == null || points.length < 2)
-            throw new IllegalArgumentException("A points should not be less than 2 or NULL.");
-        this.addPoint(points);
+    public Polyline(@NonNull Point... points) {
+        if (points.length < 2) throw new IllegalArgumentException("A points should not be less than 2");
+        this.points = new ArrayList<>(Arrays.asList(points));
     }
 
     /**
      * Метод добавляющий одну или несколько точек к ломаной линии.
      * @param points множество точек с координатами {x : y}: Point.
      */
-    public void addPoint(Point... points) {
+    public void addPoint(@NonNull Point... points) {
         for (Point point : points) {
-            this.points.add(new Point(point.getX(), point.getY()));
+            this.points.add(new Point(point));
         }
     }
-
     /**
      * Метод, вычисляющий длину ломаной линии путем сложения длин ее звеньев,
      * преобразованных в объекты класса Line.
@@ -74,11 +75,9 @@ public class Polyline {
     public void setPointValue(int x, int y, int index) {
         if (index > pointQuantity())
             throw new IndexOutOfBoundsException("The index is more than point quantity");
-
         points.get(index-1).setX(x);
         points.get(index-1).setY(y);
     }
-
     /**
      * Метод, возвращающий строковое представление объекта.
      * @return стандартное строковое представление объекта Polyline.

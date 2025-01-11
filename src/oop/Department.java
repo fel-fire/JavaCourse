@@ -72,17 +72,16 @@ public class Department {
         employees.add(employee);
         if (!(employee.getDepartment().equals(this))) {
             employee.getDepartment().removeEmployee(employee);
+            employee.getDepartment().setManager(null);
             employee.setDepartment(this);
         }
-
-
     }
 
     /**
      * Метод, удаляющий работника из списка работников
      * @param employee удаляемый работник
      */
-    public void removeEmployee(@NonNull Employee employee) {
+    public void removeEmployee(Employee employee) {
         employees.remove(employee);
     }
 
@@ -90,9 +89,9 @@ public class Department {
      * Метод, устанавливающий работника начальником отдела.
      * @param employee работник, назначаемый начальником.
      */
-    public void setManager(@NonNull Employee employee) {
+    public void setManager(Employee employee) {
         manager = employee;
-        addEmployee(employee);
+        if (employee != null) addEmployee(employee);
     }
 
     /**

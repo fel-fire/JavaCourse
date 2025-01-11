@@ -42,7 +42,7 @@ public class Employee {
      * и удаляет из старого.
      * @param department - новое значение отдела.
      */
-    public void setDepartment(Department department) {
+    public void setDepartment(@NonNull Department department) {
         department.addEmployee(this);
         this.department = department;
     }

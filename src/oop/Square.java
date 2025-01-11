@@ -15,7 +15,7 @@ import lombok.NonNull;
  * @since    04-01-2025
  * @see Point
  */
-
+@Getter
 public class Square {
     /**
      * Точка начала - левый верхний угол квадрата
@@ -24,7 +24,7 @@ public class Square {
     /**
      * Длина стороны
      */
-    @Getter
+
     private int sideLength;
 
     /**
@@ -36,7 +36,6 @@ public class Square {
         this.startPoint = startPoint;
         setValidSideLength(sideLength);
     }
-
     /**
      * Конструирует квадрат из координат X и Y начальной точки и длины стороны.
      * @param x координата X начальной точки.

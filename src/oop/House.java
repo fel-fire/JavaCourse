@@ -1,5 +1,7 @@
 package oop;
 
+import lombok.Getter;
+
 /**
  * <p>Класс <b>House</b> представляет реализацию здания, имеющего один или несколько этажей floors. </p>
  * <p>
@@ -7,12 +9,12 @@ package oop;
  * @version  1.0
  * @since    03-01-2025
  */
-
+@Getter
 public class House {
     /**
      * Количество этажей.
      */
-    private final int floors;
+    final int floors;
 
     /**
      * Конструирует объект класса House, принимая в качестве параметра количество этажей.

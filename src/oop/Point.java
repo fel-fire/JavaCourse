@@ -31,7 +31,6 @@ public class Point {
      * Конструирует копию переданного объекта класса Point
      * @param point
      */
-
     Point(@NonNull Point point) {
         x = point.x;
         y = point.y;
