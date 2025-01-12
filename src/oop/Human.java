@@ -10,7 +10,7 @@ import lombok.NonNull;
  * <p>• father: объект класса Human, являющийся отцом человека. </p></p>
  * <p>
  * @author   Nikolay Baykov
- * @version  1.1
+ * @version  1.2
  * @since    03-01-2025
  * @see Name
  */
@@ -37,7 +37,7 @@ public class Human {
     private final Human father;
 
     /**
-     * Конструирует объект Human, принимая в качестве параметра полное имя, отца и рост:
+     * Конструирует объект Human, принимая в качестве параметра полное имя, отца:
      * @param name полное имя.
      * @param father объект класса Human, являющийся отцом человека.
      */
@@ -46,7 +46,7 @@ public class Human {
         this.father = father;
     }
     /**
-     * Конструирует объект Human, принимая в качестве параметра имя в формате строки, отца и рост:
+     * Конструирует объект Human, принимая в качестве параметра имя в формате строки, отца:
      * @param name имя в строковом формате (создается объект Name с валидным firstName).
      * @param father объект класса Human, являющийся отцом человека.
      */
@@ -55,14 +55,14 @@ public class Human {
     }
 
     /**
-     * Конструирует объект Human, принимая в качестве параметра имя в формате строки и рост:
+     * Конструирует объект Human, принимая в качестве параметра имя в формате строки:
      * @param name имя в строковом формате (создается объект Name с валидным firstName).
      */
     public Human(String name) {
         this(new Name(name), null);
     }
     /**
-     * Конструирует объект Human, принимая в качестве параметра полное имя и рост:
+     * Конструирует объект Human, принимая в качестве параметра полное имя:
      * @param name полное имя.
      */
     public Human(Name name) {
@@ -85,17 +85,18 @@ public class Human {
         return name.getPatronymic();
     }
     /**
-     * Метод возвращает фамилию человека. Если фамилия не указана, возвращает фамилию отца,
+     * Метод возвращает фамилию человека. Если фамилия не указана, возвращает фамилию отца (при его наличии),
      * а в случае отсутствия фамилии у него - отца отца и т.д.
      * @return фамилия.
      */
     public String getLastName() {
-        return name.getLastName() == null || name.getLastName().isEmpty() ? father.getLastName() : name.getLastName();
+        return name.getLastName().isEmpty() && father != null ?
+                father.getLastName() : name.getLastName();
     }
     /**
      * Метод возвращает строковое представление объекта. В случае отсутствия у человека отчества и фамилии, получает их
      * от объекта father и т.д.
-     * @return строковое представление объекта класса Human в виде "Фамилия Имя Отчество, рост: 000".
+     * @return строковое представление объекта класса Human в виде "Фамилия Имя Отчество".
      */
     @Override
     public String toString() {

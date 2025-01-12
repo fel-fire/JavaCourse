@@ -30,7 +30,7 @@ public class Department {
     /**
      * Список всех работников отдела.
      */
-    private ArrayList<Employee> employees = new ArrayList<>();
+    private final ArrayList<Employee> employees = new ArrayList<>();
 
     /**
      * Конструирует отдел из названия.
@@ -46,8 +46,7 @@ public class Department {
      * @param manager начальник отдела.
      * @throws IllegalArgumentException если название отдела пустое или null.
      */
-    public Department(String name, Employee manager) {
-        if (name == null || name.isEmpty()) throw new IllegalArgumentException("Название отдела не может быть пустым или null");
+    public Department(@NonNull String name, Employee manager) {
         this.name = name;
         this.manager = manager;
         if (manager != null) checkDepartamentValueAndAdd(manager);
@@ -57,7 +56,8 @@ public class Department {
      * Метод, добавляющий работника в список работников, если указанный работник в списке отсутствует.
      * @param employee работник.
      */
-    public void addEmployee(@NonNull Employee employee) {
+    public void addEmployee(Employee employee) {
+        if (employee == null) return;
         if (!employees.contains(employee))  {
             checkDepartamentValueAndAdd(employee);
         }
@@ -70,28 +70,29 @@ public class Department {
      */
     private void checkDepartamentValueAndAdd(Employee employee) {
         employees.add(employee);
-        if (!(employee.getDepartment().equals(this))) {
+        if ((employee.getDepartment() != null) && !(employee.getDepartment().equals(this))) {
             employee.getDepartment().removeEmployee(employee);
-            employee.getDepartment().setManager(null);
-            employee.setDepartment(this);
         }
+        employee.setDepartment(this);
     }
 
     /**
-     * Метод, удаляющий работника из списка работников
+     * Метод, удаляющий работника из списка работников и позиции начальника
      * @param employee удаляемый работник
      */
     public void removeEmployee(Employee employee) {
+        if (employee == null) return;
         employees.remove(employee);
+        if (employee.equals(employee.getDepartment().getManager()))
+            employee.getDepartment().setManager(null);
     }
-
     /**
      * Метод, устанавливающий работника начальником отдела.
      * @param employee работник, назначаемый начальником.
      */
     public void setManager(Employee employee) {
         manager = employee;
-        if (employee != null) addEmployee(employee);
+        addEmployee(employee);
     }
 
     /**
@@ -111,7 +112,7 @@ public class Department {
      * @return имя начальника отдела.
      */
     public String getManagerName() {
-        return manager.getName();
+        return manager != null? manager.getName(): "Начальник временно отсутствует";
     }
 
     /**

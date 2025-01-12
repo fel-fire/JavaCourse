@@ -3,6 +3,8 @@ package oop;
 import lombok.Getter;
 import lombok.NonNull;
 
+import java.util.Objects;
+
 /**
  * <p>Класс <b>Employee</b> представляет реализацию работника,
  * который описывается следующим образом:
@@ -39,12 +41,24 @@ public class Employee {
 
     /**
      * Метод, устанавливающий новое значение отдела работнику, одновременно включает его в новый список отдела
-     * и удаляет из старого.
-     * @param department - новое значение отдела.
+     * и удаляет из старого. Если в качестве отдела передать null - работник будет уволен.
+     * @param department новое значение отдела.
      */
-    public void setDepartment(@NonNull Department department) {
-        department.addEmployee(this);
-        this.department = department;
+    public void setDepartment(Department department) {
+        if (department == null) hire();
+        else {
+            department.addEmployee(this);
+            this.department = department;
+        }
+
+    }
+
+    /**
+     * Метод, увольняющий работника и исключающий из списков отдела
+     */
+    public void hire() {
+        getDepartment().removeEmployee(this);
+        department = null;
     }
 
     /**
@@ -63,4 +77,11 @@ public class Employee {
         return String.format("%s работает в отделе %s, начальник которого %s",
                                     name, department.getName(), department.getManagerName());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Employee employee)) return false;
+        return Objects.equals(name, employee.name);
+    }
+
 }

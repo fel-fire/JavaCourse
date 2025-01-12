@@ -250,6 +250,8 @@ public class Test {
 //    1.6.10 Необходимо гарантировать, что начальник отдела гарантированно работает в том же отделе, в котором он начальник.
     public static void test_1_6_10() {
         Department it = new Department("IT");
+        System.out.println(it);
+        System.out.println();
 
         Employee employee1 = new Employee("Козлов", it);
         Employee employee2 = new Employee("Петров", it);
@@ -263,10 +265,13 @@ public class Test {
         System.out.println(employee3);
         System.out.println(employee4);
         System.out.println(employee);
+        System.out.println();
 
         Department tech = new Department("Technical", employee4);
-        employee.setDepartment(tech);
+        System.out.println(tech);
+        System.out.println();
 
+        employee.setDepartment(tech);
         Employee employee6 = new Employee("Собакин", tech);
         Employee employee7 = new Employee("Кошкин", tech);
         Employee employee8 = new Employee("Курицын", tech);
@@ -276,18 +281,36 @@ public class Test {
         System.out.println(employee7);
         System.out.println(employee8);
         System.out.println(employee);
+        System.out.println();
 
-        System.out.println(it.getEmployeesList());
+/*        System.out.println(it.getEmployeesList());
         System.out.println(tech.getEmployeesList());
 
         tech.addEmployee(employee2);
         tech.removeEmployee(employee7);
 
         System.out.println(it.getEmployeesList());
+        System.out.println(tech.getEmployeesList());*/
+
+        employee1.hire();
+        System.out.println(employee1);
+        employee4.setDepartment(null);
+
+        System.out.println(employee1);
+        System.out.println(employee2);
+        System.out.println(employee3);
+        System.out.println(employee4);
+        System.out.println(employee6);
+        System.out.println(employee7);
+        System.out.println(employee8);
+        System.out.println(employee);
+
+        System.out.println(it.getEmployeesList());
         System.out.println(tech.getEmployeesList());
 
         tech.setManager(employee1);
         it.setManager(employee3);
+        tech.removeEmployee(employee8);
 
         System.out.println(it.getEmployeesList());
         System.out.println(tech.getEmployeesList());
@@ -295,9 +318,6 @@ public class Test {
         System.out.println(employee1);
         System.out.println(employee2);
         System.out.println(employee3);
-        System.out.println(employee4);
-        System.out.println(employee);
-
         System.out.println(employee4);
         System.out.println(employee6);
         System.out.println(employee7);
