@@ -15,7 +15,7 @@ import lombok.NonNull;
  * @see Point
  */
 
-public class Line {
+public class Line implements Measurable {
     /**
      * Точка начала линии
      */

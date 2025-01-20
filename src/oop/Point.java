@@ -21,7 +21,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Point {
+public sealed class Point permits Point3D {
     /**
      * Координата X и Y.
      */

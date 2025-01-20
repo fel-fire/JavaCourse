@@ -16,7 +16,7 @@ import lombok.NonNull;
  * @see Point
  */
 @Getter
-public class Square {
+public class Square implements TransformableToPolyline{
     /**
      * Точка начала - левый верхний угол квадрата
      */
@@ -70,12 +70,12 @@ public class Square {
      * как новые объекты Point и не связаны с точками квадрата.
      * @return новый объект Polyline.
      */
-    public Polyline asPolyline() {
-        return new Polyline(new Point(startPoint.getX(), startPoint.getY()),
+    public Polyline getPolyline() {
+        return new ClosedPolyline(
+                            new Point(startPoint.getX(), startPoint.getY()),
                             new Point(startPoint.getX() + sideLength, startPoint.getY()),
                             new Point(startPoint.getX() + sideLength, startPoint.getY() - sideLength),
-                            new Point(startPoint.getX(), startPoint.getY()-sideLength),
-                            new Point(startPoint.getX(), startPoint.getY()));
+                            new Point(startPoint.getX(), startPoint.getY()-sideLength));
     }
 
     /**

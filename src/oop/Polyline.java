@@ -13,13 +13,14 @@ import java.util.Arrays;
  * <p>К ломаной линии можно добавить точку, получить общее количество точек и длину ломаной линии.</p>
  * <p>
  * @author   Nikolay Baykov
- * @version  1.0
+ * @version  1.1
  * @since    04-01-2025
  * @see Point
  * @see Line
  */
 
-public class Polyline {
+public class Polyline implements Measurable, TransformableToPolyline {
+
     /**
      * Список точек, из которых состоит ломаная линия
      */
@@ -78,6 +79,21 @@ public class Polyline {
         points.get(index-1).setX(x);
         points.get(index-1).setY(y);
     }
+
+    /**
+     * Метод, возвращающий список точек, из которых состоит ломаная линия
+     * @return копию списка {@code points}
+     */
+    public ArrayList<Point> getPoints() {
+        return new ArrayList<>(points);
+    }
+
+    @Override
+    public Polyline getPolyline() {
+        Point[] tmp = points.toArray(new Point[0]);
+        return new Polyline(tmp);
+    }
+
     /**
      * Метод, возвращающий строковое представление объекта.
      * @return стандартное строковое представление объекта Polyline.

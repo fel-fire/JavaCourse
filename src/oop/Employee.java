@@ -45,7 +45,7 @@ public class Employee {
      * @param department новое значение отдела.
      */
     public void setDepartment(Department department) {
-        if (department == null) hire();
+        if (department == null) fire();
         else {
             department.addEmployee(this);
             this.department = department;
@@ -56,7 +56,7 @@ public class Employee {
     /**
      * Метод, увольняющий работника и исключающий из списков отдела
      */
-    public void hire() {
+    public void fire() {
         getDepartment().removeEmployee(this);
         department = null;
     }

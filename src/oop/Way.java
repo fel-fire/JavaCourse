@@ -2,6 +2,7 @@ package oop;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NonNull;
 
 import java.util.Objects;
 
@@ -17,11 +18,12 @@ import java.util.Objects;
  * @see Town
  */
 @AllArgsConstructor
+@Getter
 public class Way {
     /**
      * Точка назначения.
      */
-    @Getter
+    @NonNull
     private Town townTo;
     /**
      * Стоимость поездки в точку назначения
@@ -37,11 +39,18 @@ public class Way {
         return townTo.getName() + ":" + costs;
     }
 
+    public void setCosts(int costs) {
+        if (costs < 0) throw new IllegalArgumentException();
+        this.costs = costs;
+    }
+
     /**
      * Метод, сравнивающий текущий объект с объектом o по соответствию точки назначения.
      * @param o
      * @return точки назначения одинаковые - true, разные - false.
      */
+
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

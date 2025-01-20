@@ -14,7 +14,7 @@ package oop;
  * @since    03-01-2025
  */
 
-public class Fraction {
+public class Fraction extends Number {
     /**
      * Числитель дроби
      */
@@ -162,5 +162,34 @@ public class Fraction {
      */
     private static int findNOK(int a, int b) {
         return a*b/findNOD(a,b);
+    }
+
+    /**
+     * Возвращает представление в виде {@code int} числа, округленного до полного целого числа.
+     */
+    @Override
+    public int intValue() {
+        return numerator/denominator;
+    }
+    /**
+     * Возвращает представление в виде {@code long} числа, округленного до полного целого числа.
+     */
+    @Override
+    public long longValue() {
+        return numerator/denominator;
+    }
+    /**
+     * Возвращает представление в виде {@code float} числа.
+     */
+    @Override
+    public float floatValue() {
+        return (float) numerator/denominator;
+    }
+    /**
+     * Возвращает представление в виде {@code double} числа.
+     */
+    @Override
+    public double doubleValue() {
+        return (double) numerator/denominator;
     }
 }

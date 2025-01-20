@@ -3,21 +3,21 @@ package oop;
 import lombok.Getter;
 
 /**
- * <p>Класс <b>Cat</b> представляет реализацию животного - кота, который может помяукать
- * один или несколько раз.</p>
+ * <p>Класс {@code Cat} представляет животного - кота, который может помяукать
+ * один или несколько раз. Реализует интерфейс {@code Meowable}</p>
  * <p>
  * @author   Nikolay Baykov
- * @version  1.0
- * @since    01-01-2025
+ * @version  1.1
+ * @since    17-01-2025
  */
 
 
 @Getter
-public class Cat {
+public class Cat implements Meowable{
     /**
      * Имя кота
      */
-    final String name;
+    private final String name;
 
     /**
      * Конструирует объект класса Cat. В качестве параметра принимает строку name.
@@ -43,6 +43,7 @@ public class Cat {
      * <p>Метод заставляет кота мяукнуть один раз.
      * О том, что кот мяукнул, выводится на экран</p>
      */
+    @Override
     public void meow() {
         System.out.println(name + ": мяу!");
     }

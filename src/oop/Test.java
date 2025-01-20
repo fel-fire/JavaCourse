@@ -1,337 +1,209 @@
 package oop;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 public class Test {
     public static void main(String[] args) {
+        //test_2_1_2();
+        //test_2_1_3();
+        //test_2_1_4();
+        //test_2_2_1();
+        //test_2_2_2();
+        //test_2_2_3();
+        //test_2_2_5();
 
-        //test_1_5_1();
-        //test_1_5_2();
-        //test_1_5_3();
-        //test_1_5_4();
-        //test_1_5_5();
-        //test_1_5_6();
-        //test_1_5_7();
-        //test_1_5_8();
-        //test_1_6_1();
-        //test_1_6_2();
-        //test_1_6_3();
-        //test_1_6_4();
-        //test_1_6_5();
-        //test_1_6_6();
-        //test_1_6_8();
-        //test_1_6_9();
-        test_1_6_10();
+        //System.out.println(method_2_3_1(2, new Fraction(3, 5), 2.3));
+        //method_2_3_2(new Cuckoo(), new Parrot("Попка - дурак!"), new Sparrow(), new Cuckoo(),
+        //            new Parrot("Я люблю Java"), new Sparrow());
 
+//        System.out.println(method_2_3_3(
+//                new Round(5),
+//                new Triangle(2, 2, 3),
+//                new Rectangle(5, 10),
+//                new Square2(5))
+//        );
+        //method_2_3_4(new Cat("Barsik"), new Cat("Pushok"), new Lion());
+//        System.out.println(method_2_3_5(
+//                new Line(0, 0, 0, 5),
+//                new Polyline(
+//                        new Point(2, 6),
+//                        new Point(5, 7),
+//                        new Point(12, 5),
+//                        new Point(22,13))));
+        //test_2_3_6();
+//        System.out.println(method_2_3_7(
+//                new Polyline(new Point(1,1), new Point(1, 3), new Point(3, 6)),
+//                new Square(7, 7, 7)));
+//        test_2_3_8();
+//        test_2_3_9();
     }
 
-    // 1.5.1. Создайте пистолет с тремя патронами и выстрелите из него пять раз.
-    public static void test_1_5_1() {
-        Handgun gun = new Handgun(10,10);
-        for (int i = 0; i < 5; i ++) {
-            gun.shoot();
-        }
-    }
-    // 1.5.2. Создайте кота по имени “Барсик”, и затем пусть он помяукает сначала один раз, а затем три раза.
-    public static void test_1_5_2() {
-        Cat cat = new Cat("");
-        cat.meow();
-        cat.meow(3);
-    }
-    // 1.5.3. Создайте линию из точки {1;1} в точку {10;15} и выведите на экран её длину.
-    public static void test_1_5_3() {
-        Line line = new Line(1, 1, 10, 15);
-        System.out.println(line.length());
+
+    private static void test_2_1_2() {
+        Point point1 = new Point(0, 0);
+        Point point2 = new Point(5, 0);
+        Point point3 = new Point(5, 5);
+        Point point4 = new Point(0, 5);
+        ClosedPolyline closedPolyline = new ClosedPolyline(point1, point2, point3, point4);
+        System.out.println(closedPolyline.length());
     }
 
-    /*     1.5.4 Добавьте Человеку следующие возможности: возвращать Личное имя, возвращать Отчество, возвращать Фамилию.
-     Измените метод приведения Человека к строковой форме так, чтобы значение фамилии выбиралось с использованием указанного выше поведения.*/
-    public static void test_1_5_4() {
-        Name name = new Name("Иван", "Козлов", "Петрович");
-        Human grandGrandFather = new Human(name);
-        Human grandFather = new Human("Валентин", grandGrandFather);
-        Human father = new Human("Игорь", grandFather);
-        Human son = new Human("Евгений", father);
+    private static void test_2_1_3() {
+        TownWithBackWay moscow = new TownWithBackWay("Moscow");
+        TownWithBackWay berlin = new TownWithBackWay("Berlin");
+        moscow.addWay(new Way(berlin, 2500));
+        System.out.println(moscow);
+        System.out.println(berlin);
+        TownWithBackWay paris = new TownWithBackWay("Paris", new Way(moscow, 3000), new Way(berlin, 4500));
+        System.out.println(moscow);
+        System.out.println(berlin);
+        System.out.println(paris);
 
-        System.out.println(grandGrandFather);
-        System.out.println(grandFather);
-        System.out.println(father);
-        System.out.println(son);
+        moscow.addWay(new Way(berlin, 10000));
+        System.out.println(moscow);
+        System.out.println(berlin);
+        System.out.println(paris);
     }
 
-    /*1.5.5. необходимо выполнить следующие задачи:
-    1.	Создать несколько экземпляров дробей.
-    2.	Написать по одному примеру использования каждого метода.
-    3.	Вывести на экран примеры и результаты их выполнения в формате «1/3 * 2/3 = 2/9»
-    4.	Посчитать f1.sum(f2).div(f3).minus(5)*/
-    private static void test_1_5_5() {
-        Fraction fraction1 = new Fraction(1, 2);
-        Fraction fraction2 = new Fraction(2, 3);
-        Fraction fraction3 = new Fraction(3, 4);
-        System.out.println(fraction1.sum(fraction2));
-        System.out.println(fraction1.substract(fraction2));
-        System.out.println(fraction1.divide(fraction2));
-        System.out.println(fraction1.multiple(fraction2));
-        System.out.println(fraction1.sum(fraction2).divide(fraction3).substract(5));
+    private static void test_2_1_4() {
+        MachineRifle machineRifle1 = new MachineRifle();
+        MachineRifle machineRifle2 = new MachineRifle(20);
+        MachineRifle machineRifle3 = new MachineRifle(20, 5);
+        machineRifle1.load(20);
+        machineRifle2.load(20);
+        machineRifle3.load(20);
+        machineRifle1.shoot();
+        machineRifle1.shoot(3);
+        machineRifle2.shoot(1);
+        machineRifle3.shoot(3);
     }
 
-    /*     1.5.6. Необходимо выполнить следующие задачи:
-          1.	Создайте студента Васю с оценками 3,4,5,4
-          2.	Создайте студента Петю с оценками 5,5,5,5
-          3.	Выведите для обоих студентов информацию о среднем балле и являются ли они отличниками*/
-    public static void test_1_5_6() {
-        Student student1 = new Student("Vasya", 3, 4, 5, 4);
-        Student student2 = new Student("Petya", 5, 5, 5, 5);
-        System.out.println(student1.avgMark());
-        System.out.println(student2.avgMark());
-        System.out.println(student1.isExcellent());
-        System.out.println(student2.isExcellent());
-    }
-
-    /*    1.5.7 Длина Ломаной. Необходимо выполнить следующие задачи:
-      1.	Создать Ломаную, проходящую через точки {1;5}, {2;8}, {5;3}
-      2.	Вывести на экран её длину
-      3.	Добавить (к ранее созданной Ломаной) точки {5;15}, {8;10}
-      4.	Снова вывести на экран длину Ломаной*/
-    public static void test_1_5_7() {
-        Point point1 = new Point(1, 5);
-        Point point2 = new Point(2, 8);
-        Point point3 = new Point(5, 3);
-        Polyline polyline = new Polyline(point1, point2, point3);
-        System.out.println(polyline.length());
-        polyline.addPoint(new Point(5, 15));
-        polyline.addPoint(new Point(8, 10));
-        System.out.println(polyline.length());
-    }
-
-    /* 1.5.8. Необходимо выполнить следующие задачи:
-            1.	Создайте Квадрат в точке {5;3} со стороной 23
-            2.	Присвойте в ссылку типа Ломаная результат вызова метода получения Ломаной у ранее созданного квадрата
-            3.	Выведите на экран общую длину полученной Ломаной
-            4.	Сдвиньте последнюю Точку Ломаной в позицию {15,25}
-            5.	Снова выведите на экран длину Ломаной*/
-
-    public static void test_1_5_8() {
-        Square square = new Square(5, 3, 23);
-        Polyline polyline = square.asPolyline();
-        System.out.println(square);
-        System.out.println(polyline);
-        System.out.println(polyline.length());
-        polyline.setPointValue(15, 25, polyline.pointQuantity());
-        System.out.println(polyline);
-        System.out.println(polyline.length());
-    }
-
-    /*1.6.1 Гарантируйте, что у дома всегда будет положительное количество этажей. В случае попытки указать отрицательное
-    количество этажей должна выбрасываться соответствующая ошибка.
-    Продемонстрируйте работоспособность решения на примерах.*/
-    public static void test_1_6_1() {
-        //House house1 = new House(-1);
-        House house2 = new House(5);
-        System.out.println(house2);
-    }
-
-    /*1.6.2 Гарантируйте, что:
-            •	Как минимум один параметр будет иметь не null значение и не пустую строку.
-            •	Имя неизменяемо.
-    Продемонстрируйте работоспособность решения на примерах.*/
-    public static void test_1_6_2() {
-//        Name name1 = new Name(null);
-//        Name name2 = new Name("");
-//        System.out.println(name1);
-//        System.out.println(name2);
-
-    }
-
-    /*1.6.3 Гарантируйте, что Квадрату невозможно задать отрицательное значение длины стороны.
-    При попытке задать сторону равной нулю или менее, выбрасывается ошибка с соответствующим текстом.
-    Контроль должен осуществляться как во время создания объекта, так и позднее, в случае если будет необходимо
-    менять размеры Квадрата. Необходимо предоставить возможность изменения длины стороны Квадрата и возможность
-    узнать размер стороны. Продемонстрируйте работоспособность решения на примерах.*/
-    public static void test_1_6_3() {
-        //Square square = new Square(0, 0, -1);
-        Square square1 = new Square(0, 0, 5);
-        square1.setSideLength(10);
-        //square1.setSideLength(-5);
-        System.out.println(square1.getSideLength());
-    }
-
-    /*1.6.4 Реализуйте следующие требования:
-        •	Дробь не может быть изменена после создания
-        •	Необходимо корректно обрабатывать отрицательные значения. Учтите, что знаменатель не может быть отрицательным.
-Продемонстрируйте работоспособность решения на примерах.*/
-    private static void test_1_6_4() {
-        Fraction fraction1 = new Fraction(1, -2);
-        Fraction fraction2 = new Fraction(-2, 3);
-        Fraction fraction3 = new Fraction(-3, -4);
-        System.out.println(fraction1);
-        System.out.println(fraction2);
-        System.out.println(fraction3);
-        System.out.println(fraction1.sum(fraction2));
-        System.out.println(fraction1.substract(fraction2));
-        System.out.println(fraction1.divide(fraction2));
-        System.out.println(fraction1.multiple(fraction2));
-        System.out.println(fraction1.sum(fraction2).divide(fraction3).substract(-5));
-    }
-
-    /*1.6.5 Создайте пистолет вместимостью 7, зарядите три патрона, выстрелите из него пять раз, затем зарядите в него
-    8 патронов, выстрелите еще 2 раза, разрядите его, сделайте контрольный выстрел.
-    Если все выполнено верно, то должно быть выведено: Бах! Бах! Бах! Клац! Клац! Бах! Бах! Клац!
-*/
-    public static void test_1_6_5() {
-        Handgun handgun = new Handgun(7);
-        handgun.load(3);
-        for (int i = 0; i < 5; i++) {
+    private static void test_2_2_1() {
+        Handgun handgun = new Handgun(8, 8);
+        for (int i = 0; i < 4; i++) {
             handgun.shoot();
         }
-        handgun.load(8);
-        for (int i = 0; i < 2; i++) {
+        System.out.println(handgun.load(20));
+        System.out.println(handgun.ammo());
+        for (int i = 0; i < 10; i++) {
             handgun.shoot();
         }
-        handgun.unload();
-        handgun.shoot();
 
     }
 
-    /*Необходимо, чтобы Линия соответствовала следующим требованиям:
-            •	Две любые линии не могут ссылаться на один и тот же объект точки.
-•	У Линии можно изменить координаты начала или конца
-•	У Линии можно запросить координаты начала или конца
-    Продемонстрируйте работоспособность решения на примерах.
-*/
-    public static void test_1_6_6() {
-        Point point1 = new Point(1, 5);
-        Point point2 = new Point(6, 10);
-        Point point3 = new Point(11, 15);
-        Line line1 = new Line(point1, point2);
-        Line line2 = new Line(point2, point3);
-        System.out.println(line1);
-        System.out.println(line2);
-        System.out.println(line1.getEndPoint() == line2.getStartPoint());
-        line1.setEndPoint(point3);
-        System.out.println(line1);
-        System.out.println(line2);
-        System.out.println(line1.getEndPoint() == line2.getEndPoint());
+    private static void test_2_2_2() {
+        Fraction fraction1 = new Fraction(4, 2);
+        Fraction fraction2 = new Fraction(2, 4);
+        System.out.println(fraction1.intValue());
+        System.out.println(fraction2.intValue());
+        System.out.println(fraction1.longValue());
+        System.out.println(fraction2.longValue());
+        System.out.println(fraction1.doubleValue());
+        System.out.println(fraction2.doubleValue());
+        System.out.println(fraction1.floatValue());
+        System.out.println(fraction2.floatValue());
+    }
+
+    private static void test_2_2_3() {
+        Sparrow sparrow = new Sparrow();
+        sparrow.sing();
+        Cuckoo cuckoo = new Cuckoo();
+        cuckoo.sing();
+        Parrot parrot = new Parrot("От улыбки станет всем светлей");
+        parrot.sing();
+
+    }
+    private static void test_2_2_5() {
+        CompositePoint cp = new CompositePoint(
+                PointCoordinatesGenerator.generate(3, 4, 5),
+                new PointColor("green"),
+                new PointSize(20));
+        System.out.println(cp);
+
 
     }
 
-    //private static void test_1_6_7()
-
-    /*1.6.8 Необходимо гарантировать, что добавлять Студенту можно только оценки в диапазоне от 2 до 5,
-    при этом у Студента всегда можно узнать список оценок.
-    Продемонстрируйте на примерах, что нет способа задать Студенту некорректную оценку.*/
-    public static void test_1_6_8() {
-        Student student = new Student("Petr", 2, 3, 4, 5 );
-        System.out.println(student.getMarks().add(345));
-        System.out.println(student.getMarks());
+    private static void test_2_3_6() {
+        Square square = new Square(5, 0, 10);
+        System.out.println(square.getPolyline().length());
     }
 
-    public static void test_1_6_9() {
-        Town moscow = new Town("Москва");
-        Town stPeterburg = new Town("Санкт-Петербург");
-        Town nizhniyNovgorod = new Town("Нижний Новгород");
-        Town voronezh = new Town("Воронеж");
-
-        moscow.addWay(new Way(stPeterburg, 100));
-        moscow.addWay(new Way(nizhniyNovgorod, 150));
-        moscow.addWay(new Way(voronezh, 125));
-
-        System.out.println(moscow);
-
-        moscow.addWay(new Way(stPeterburg, 200));
-        moscow.addWay(new Way(voronezh, 270));
-        moscow.removeWay(nizhniyNovgorod);
-        System.out.println(moscow);
+    private static void test_2_3_8() {
+        Shooter shooter1 = new Shooter("John");
+        shooter1.shoot();
+        Shooter shooter2 = new Shooter("Ted", new Handgun(5));
+        shooter2.shoot();
+        Shooter shooter3 = new Shooter("Bill", new MachineRifle(30, 10));
+        shooter3.shoot();
     }
 
-//    1.6.10 Необходимо гарантировать, что начальник отдела гарантированно работает в том же отделе, в котором он начальник.
-    public static void test_1_6_10() {
-        Department it = new Department("IT");
-        System.out.println(it);
-        System.out.println();
-
-        Employee employee1 = new Employee("Козлов", it);
-        Employee employee2 = new Employee("Петров", it);
-        Employee employee3 = new Employee("Сидоров", it);
-        Employee employee4 = new Employee("Воронин", it);
-        Employee employee = new Employee("Тараканов", it);
-        it.setManager(employee1);
-
-        System.out.println(employee1);
-        System.out.println(employee2);
-        System.out.println(employee3);
-        System.out.println(employee4);
-        System.out.println(employee);
-        System.out.println();
-
-        Department tech = new Department("Technical", employee4);
-        System.out.println(tech);
-        System.out.println();
-
-        employee.setDepartment(tech);
-        Employee employee6 = new Employee("Собакин", tech);
-        Employee employee7 = new Employee("Кошкин", tech);
-        Employee employee8 = new Employee("Курицын", tech);
-
-        System.out.println(employee4);
-        System.out.println(employee6);
-        System.out.println(employee7);
-        System.out.println(employee8);
-        System.out.println(employee);
-        System.out.println();
-
-/*        System.out.println(it.getEmployeesList());
-        System.out.println(tech.getEmployeesList());
-
-        tech.addEmployee(employee2);
-        tech.removeEmployee(employee7);
-
-        System.out.println(it.getEmployeesList());
-        System.out.println(tech.getEmployeesList());*/
-
-        employee1.hire();
-        System.out.println(employee1);
-        employee4.setDepartment(null);
-
-        System.out.println(employee1);
-        System.out.println(employee2);
-        System.out.println(employee3);
-        System.out.println(employee4);
-        System.out.println(employee6);
-        System.out.println(employee7);
-        System.out.println(employee8);
-        System.out.println(employee);
-
-        System.out.println(it.getEmployeesList());
-        System.out.println(tech.getEmployeesList());
-
-        tech.setManager(employee1);
-        it.setManager(employee3);
-        tech.removeEmployee(employee8);
-
-        System.out.println(it.getEmployeesList());
-        System.out.println(tech.getEmployeesList());
-
-        System.out.println(employee1);
-        System.out.println(employee2);
-        System.out.println(employee3);
-        System.out.println(employee4);
-        System.out.println(employee6);
-        System.out.println(employee7);
-        System.out.println(employee8);
-        System.out.println(employee);
-
-        System.out.println(it);
-        System.out.println(tech);
-
+    private static void test_2_3_9() {
+        Student vasya = new Student("Vasya", new StudentOneOrZero(), 1, 1, 1, 0, 0, 0);
+        Student petya = new Student("Petya", new StudentOnlyEven(), 2, 4, 6, 8);
+        Student sidor = new Student("Sidor",   1, 10, 20, 30, 40);
+        System.out.println(vasya);
+        System.out.println(petya);
+        System.out.println(sidor);
     }
 
+    // Указанном блоке располагаются решения задач из раздела 2.3, которые необходимо было выполнить
+    // в виде разработки нового метода
 
+    /* 2.3.1 Сложение. Разработайте метод, который принимает набор числовых значений и возвращает их
+    сумму в вещественной форме. С использованием данного метода выполните следующие сложения:*/
+    private static double method_2_3_1(Number... numbers) {
+        if (numbers == null || numbers.length == 0) throw new IllegalArgumentException("Invalid input values");
+        double res = 0;
+        for (Number number : numbers) res += number.doubleValue();
+        return res;
+    }
 
+    /* 2.3.2 Птичий рынок. Разработайте метод, который принимает набор птиц из задачи 2.2.3 и вызывает метод пения у каждой из
+    них. Продемонстрируйте работоспособность метода, передав в него несколько воробьев, кукушек и попугаев.*/
+    private static void method_2_3_2(Bird... birds) {
+        if (birds == null || birds.length == 0) throw new IllegalArgumentException("Invalid input values");
+        for (Bird bird : birds) bird.sing();
+    }
 
+    /*    2.3.3 Общая площадь. Разработайте метод, который принимает набор фигур из задачи 2.2.4 и считает их общую площадь
+            (без учета возможного перекрытия фигурами друг друга). Продемонстрируйте работоспособность метода, передав
+    туда несколько кругов и квадратов.*/
+    private static double method_2_3_3(Figure... figures) {
+        if (figures == null || figures.length == 0) throw new IllegalArgumentException("Invalid input values");
+        double totalArea = 0;
+        for (Figure figure : figures) {
+            //System.out.println(figure.getArea());
+            totalArea += figure.getArea();
+        }
+        return totalArea;
+    }
+
+/*    2.3.4 Мяуканье. Разработайте метод, который принимает набор объектов способных мяукать и вызывает
+    мяуканье у каждого объекта.*/
+    private static void method_2_3_4(Meowable... cats) {
+        if (cats == null || cats.length == 0) throw new IllegalArgumentException("Invalid input values");
+        for (Meowable cat : cats) cat.meow();
+    }
+
+/*    2.3.5 Измерение длины. Разработайте метод, который принимает набор объектов у которых
+    можно посчитать длину, и возвращает сумму длин принятых объектов.*/
+    private static int method_2_3_5(Measurable... lines) {
+        if (lines == null || lines.length == 0) throw new IllegalArgumentException("Invalid input values");
+        int res = 0;
+        for (Measurable line : lines) res += line.length();
+        return res;
+    }
+
+/*    2.3.7 Поломки. Разработайте метод, который принимает такой набор объектов, у которых можно получить ломаную линию,
+    и возвращает их объединение в виде одного объекта типа Ломаная.*/
+    private static Polyline method_2_3_7(TransformableToPolyline... obj) {
+        if (obj == null || obj.length == 0) throw new IllegalArgumentException("Invalid input values");
+        Polyline polyline = obj[0].getPolyline();
+        for (int i = 1; i < obj.length; i++) {
+            Polyline tmpPolyline = obj[i].getPolyline();
+            Point[] tmp = tmpPolyline.getPoints().toArray(new Point[0]);
+            polyline.addPoint(tmp);
+        }
+        return polyline;
+    }
 }
 
 

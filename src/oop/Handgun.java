@@ -11,12 +11,7 @@ import lombok.Getter;
  * @since    03-01-2025
  */
 @Getter
-public class Handgun {
-    /**
-     * Количество патронов
-     */
-    private int bullets;
-
+public class Handgun extends Weapon{
     /**
      * Емкость магазина
      */
@@ -33,17 +28,17 @@ public class Handgun {
     /**
      * Конструирует пистолет емкостью магазина capacity и количеством патронов - bullets. Вызывает служебный
      * метод setValidBullets(bullets).
-     * @param bullets количество патронов.
+     * @param ammo количество патронов.
      * @param capacity емкость магазина.
      * @throws IllegalArgumentException если емкость магазина отрицательное число либо 0.
      */
-    public Handgun(int bullets, int capacity) {
+    public Handgun(int ammo, int capacity) {
+        super(getValidAmmoValue(ammo, capacity));
         if (capacity <= 0) throw new IllegalArgumentException("Capacity must not be less than 1 and bullets");
         this.capacity = capacity;
-        setValidBullets(bullets);
+
 
     }
-
 
     /**
      * Служебный метод, проверяющий соответствие переданного значения bullets емкости магазина capacity. В случае если
@@ -51,20 +46,21 @@ public class Handgun {
      * @param bullets количество заряжаемых патронов
      * @throws IllegalArgumentException если количество заряжаемых патронов отрицательное.
      */
-    private void setValidBullets(int bullets) {
-        if (bullets < 0) throw new IllegalArgumentException("bullets must not be negative");
-        this.bullets = Math.min(bullets, capacity);
+    private static int getValidAmmoValue(int bullets, int capacity) {
+        return Math.min(bullets, capacity);
     }
 
     /**
-     * Метод, заряжающий пистолет переданным в качестве параметра количеством патронов bullets. В случае, если количество
-     * заряжаемых патронов превышает емкость магазина, возвращает количество лишних патронов.
-     * @param bullets количество заряжаемых патронов
-     * @return количество патронов, превышающих емкость магазина
+     * Метод, заряжающий пистолет одним магазином емкостью {@code capacity} с переданным
+     * в качестве параметра количеством патронов {@code ammo}. В случае, если количество
+     * заряжаемых патронов превышает емкость магазина, заряжает один полный магазин. Возвращает
+     * количество патронов, оставшихся в разряженном магазине.
+     * @param ammo количество заряжаемых патронов
+     * @return количество патронов, оставшихся в разряженном магазине.
      */
-    public int load(int bullets) {
-        setValidBullets(bullets);
-        return this.bullets == capacity ? bullets - capacity : 0;
+    @Override
+    public int load(int ammo) {
+        return super.load(getValidAmmoValue(ammo, capacity));
     }
 
     /**
@@ -72,8 +68,8 @@ public class Handgun {
      * @return количество разряженных патронов.
      */
     public int unload() {
-        int tmp = bullets;
-        bullets = 0;
+        int tmp = ammo();
+        super.load(0);
         return tmp;
     }
 
@@ -82,17 +78,17 @@ public class Handgun {
      * @return логическое значение состояния пистолета.
      */
     public boolean isLoaded() {
-        return bullets > 0;
+        return ammo() > 0;
     }
 
     /**
      * Метод, осуществляющий выстрел из пистолета с отображением сведений в консоли.
      * В случае выстрела отображается "Бах!", при пустом магазине - "Клац!".
      */
+    @Override
     public void shoot() {
-        if (bullets > 0) {
+        if (getAmmo()) {
             System.out.println("Бах!");
-            bullets--;
         }
         else System.out.println("Клац!");
     }
