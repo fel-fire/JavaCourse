@@ -5,43 +5,50 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
+import java.util.Objects;
+
 /**
- * <p>Класс <b>Point</b> представляет реализацию точки
+ * <p>Класс {@code Point} представляет реализацию точки
  * на двумерной системе координат типа {x : y},
  * которая описывается следующим образом:
  * <p>•координата Х: int</p>
  * <p>•координата Y: int</p></p>
- * <p>
  * @author   Nikolay Baykov
- * @version  1.1
- * @since    01-01-2025
  */
 
 
 @AllArgsConstructor
 @Getter
 @Setter
-public sealed class Point permits Point3D {
-    /**
-     * Координата X и Y.
-     */
+public sealed class Point implements Cloneable permits Point3D  {
+
     private int x, y;
 
-    /**
-     * Конструирует копию переданного объекта класса Point
-     * @param point
-     */
     Point(@NonNull Point point) {
         x = point.x;
         y = point.y;
     }
 
-    /**
-     * Данный метод возвращает строковое представление объекта
-     * @return строковое представление объекта класса Point
-     */
     @Override
     public String toString() {
         return "{" + x + "; " + y + "}";
+    }
+
+    @Override
+    public Point clone() throws CloneNotSupportedException {
+        return (Point) super.clone();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Point point = (Point) o;
+        return x == point.x && y == point.y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 }

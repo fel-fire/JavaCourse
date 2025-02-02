@@ -3,6 +3,8 @@ package edu.baykov.geometry;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Objects;
+
 /**
  * <p>Класс {@code Point3D} представляет реализацию точки
  * в трехмерной системе координат типа {x : y : z},
@@ -39,5 +41,18 @@ public final class Point3D extends Point {
     @Override
     public String toString() {
         return "{" + super.getX() + "; " + super.getX() + "; " + z + "}";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Point3D point3D = (Point3D) o;
+        return z == point3D.z;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), z);
     }
 }

@@ -3,6 +3,8 @@ package edu.baykov.animals;
 import lombok.Getter;
 import lombok.NonNull;
 
+import java.util.Objects;
+
 /**
  * <p>Абстрактный класс {@code Bird}, являющийся корнем иерархии для всех, кто является подвидом птицы:</p>
  * <p>•	Имеет произносимый текст {@code textOfSong} (строка)</p>
@@ -24,6 +26,18 @@ public abstract class Bird {
      */
     public Bird(@NonNull String text) {
         this.textOfSong = text;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Bird bird = (Bird) o;
+        return Objects.equals(textOfSong, bird.textOfSong);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(textOfSong);
     }
 
     /**
