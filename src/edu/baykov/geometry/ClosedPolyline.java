@@ -2,6 +2,7 @@ package edu.baykov.geometry;
 
 import lombok.NonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,8 +43,12 @@ public class ClosedPolyline extends Polyline {
         return result + lastLine.length();
     }
 
+
     @Override
-    public int hashCode() {
-        return super.hashCode() + new Line(points.getLast(), points.getFirst()).hashCode();
+    ArrayList<Line> asUniqueLinesList(ArrayList<Point> points) {
+        ArrayList<Point> tmp = new ArrayList<>(points);
+        tmp.add(tmp.getFirst());
+        return super.asUniqueLinesList(tmp);
     }
+
 }

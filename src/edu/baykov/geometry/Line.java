@@ -13,52 +13,54 @@ import java.util.Objects;
  * @author   Nikolay Baykov
  * @see Point
  */
-public class Line implements Measurable, Cloneable {
+public class Line<T extends Point> implements Measurable, Cloneable {
 
-    private Point startPoint;
-    private Point endPoint;
+    private T start;
+    private T end;
 
-    public Line(@NonNull Point startPoint, @NonNull Point endPoint) {
-        this(startPoint.getX(), startPoint.getY(), endPoint.getX(), endPoint.getY());
+
+    public Line(@NonNull T startPoint, @NonNull T endPoint) {
+        this.start = startPoint;
+        this.end = endPoint;
+
+        //this(startPoint.getX(), startPoint.getY(), endPoint.getX(), endPoint.getY());
     }
 
-    public Line(int startX, int startY, int endX, int endY) {
-        startPoint = new Point(startX, startY);
-        endPoint = new Point(endX, endY);
+/*    public Line(int startX, int startY, int endX, int endY) {
+        start = new Point(startX, startY);
+        end = new Point(endX, endY);
+    }*/
+
+    public T getStart() {
+        return start;
     }
 
-    public Point getStartPoint() {
-        return new Point(startPoint);
+    public void setStart(@NonNull T start) {
+        this.start = start;
     }
 
-    public void setStartPoint(@NonNull Point startPoint) {
-        this.startPoint = new Point(startPoint);
+    public T getEnd() {
+        return end;
     }
 
-    public Point getEndPoint() {
-        return new Point(endPoint);
-    }
-
-    public void setEndPoint(@NonNull Point endPoint) {
-        this.endPoint = new Point(endPoint);
+    public void setEnd(@NonNull T end) {
+        this.end = end;
     }
 
     public int length() {
-        return (int) Math.sqrt(Math.pow(endPoint.getX() - startPoint.getX(), 2) + Math.pow(endPoint.getY() - startPoint.getY(), 2));
+        return (int) Math.sqrt(Math.pow(end.getX() - start.getX(), 2) + Math.pow(end.getY() - start.getY(), 2));
     }
 
-    public Line clone() throws CloneNotSupportedException {
-        Line line = (Line) super.clone();
-        line.startPoint = this.startPoint.clone();
-        line.endPoint = this.endPoint.clone();
+    public Line<T> clone() throws CloneNotSupportedException {
+        Line<T> line = (Line<T>) super.clone();
+        line.start = (T) this.start.clone();
+        line.end = (T) this.end.clone();
         return line;
     }
-
     @Override
     public String toString() {
-        return "Line from " + startPoint + " to " + endPoint;
+        return "Line from " + start + " to " + end;
     }
-
     /**
      * Метод, сравнивающий 2 прямые линии вне зависимости от того, какая из точек линии
      * указана в качестве начальной {@code startPoint}
@@ -67,13 +69,13 @@ public class Line implements Measurable, Cloneable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Line line = (Line) o;
-        return (Objects.equals(startPoint, line.startPoint) && Objects.equals(endPoint, line.endPoint)) ||
-               (Objects.equals(startPoint, line.endPoint) && Objects.equals(endPoint, line.startPoint));
+        Line<T> line = (Line<T>) o;
+        return (Objects.equals(start, line.start) && Objects.equals(end, line.end)) ||
+               (Objects.equals(start, line.end) && Objects.equals(end, line.start));
     }
     @Override
     public int hashCode() {
-        return startPoint.hashCode() + endPoint.hashCode();
+        return start.hashCode() + end.hashCode();
     }
 }
 

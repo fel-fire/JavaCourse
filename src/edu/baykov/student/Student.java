@@ -14,7 +14,7 @@ import java.util.Objects;
  * <p>•Правило, определения корректности оценок студента</p></p>
  * @author Nikolay Baykov
  */
-public class Student {
+public class Student implements Comparable<Student>{
     @Getter
     private String name;
     private ArrayList<Integer> marks;
@@ -78,15 +78,10 @@ public class Student {
         return (int) (averageMark()*100) + Objects.hashCode(name);
     }
 
-    //    /** ПОКА НЕ АКТУАЛЕН ВВИДУ РАЗНООБРАЗИЯ Rule
-//     * Метод, проверяющий, является ли студент отличником.
-//     *
-//     * @return true, если средняя оценка студента равна 5.0, в противном случае false.
-//     */
 
-//    public boolean isExcellent() {
-//        return avgMark() == 5.0;
-//    }
-
-
+    @Override
+    public int toCompare(Student obj) {
+        int result = (int) ((averageMark() - obj.averageMark())*100);
+        return Integer.compare(result, 0);
+    }
 }

@@ -79,4 +79,15 @@ public class StudentTest {
         assertFalse(student3.equals(student2) && student3.equals(student1));
         assertEquals(student1.hashCode(), student2.hashCode());
     }
+
+    @Test
+    void toCompare() {
+        Student student1 = new Student("Arkadiy", 5, 5, 4, 3, 4, 5);
+        Student student2 = new Student("Vasiliy", 4, 4, 4, 4, 4, 4);
+        Student student3 = new Student("Petr", 5, 5, 4, 3, 4, 5);
+
+        assertEquals(1, student1.toCompare(student2));
+        assertEquals(-1, student2.toCompare(student3));
+        assertEquals(0, student1.toCompare(student3));
+    }
 }

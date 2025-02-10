@@ -1,21 +1,26 @@
 package edu.baykov.main;
 
+import edu.baykov.geometry.Line;
+import edu.baykov.geometry.Point;
+import edu.baykov.geometry.Point3D;
 import edu.baykov.network.Connection;
 import edu.baykov.network.LostConnectionException;
+import edu.baykov.oop.Box;
+import edu.baykov.oop.Storage;
 import edu.baykov.student.InvalidMarksValueException;
 import edu.baykov.student.Student;
 
 import static java.lang.Integer.parseInt;
 import static java.lang.Math.pow;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Stream;
 //import edu.baykov.geometry.Point;
 
 /**
  * В указанном классе {@code Main} располагаются решения задач из разделов задачника, которые необходимо было выполнить
  * в виде разработки нового метода.
+ *
  * @author Nikolay Baykov
  */
 
@@ -23,7 +28,6 @@ public class Main {
     public static void main(String[] args) {
 
     }
-
 
     /* 3.1.3 Сложение. Разработайте метод, который принимает набор числовых значений и возвращает их
     сумму в вещественной форме. С использованием данного метода выполните следующие сложения:*/
@@ -116,7 +120,110 @@ public class Main {
         return new ArrayList<>();
     }
 
+/*    6.2.1 Сдвинуть линию. Создайте метод, принимающий Линию из задачи 6.1.5 (с любой допустимой параметризацией)
+    сдвигающей точку начала на 10 единиц по оси X. Например, если X был 5,
+    то должен стать 15, если X был -7 то должен стать -17.*/
+
+    public static void move(Line<? extends Point> line) {
+        int startPointX = line.getStart().getX();
+        startPointX = startPointX < 0 ? startPointX - 10 : startPointX + 10;
+        line.getStart().setX(startPointX);
+    }
+
+/*    6.2.2 Поиск максимума. Создайте метод, принимающий набор Коробок из задачи 6.1.1 и возвращающий максимальное
+    из их значений в формате double. Принимаемые методом Коробки могут быть параметризованы любыми видами чисел.
+    */
+
+    public static double maximum(Box<? extends Number>... boxes) {
+        double maxValue = 0;
+        for (Box<? extends Number> box : boxes) {
+            double value = box.getObj().doubleValue();
+            maxValue = Math.max(value, maxValue);
+        }
+        return maxValue;
+    }
+/*    6.2.3 Начало отсчета. Создайте метод, принимающий Коробку из задачи 6.1.1, и кладет в неё трехмерную точку
+    координат (из задачи 2.1.5) с произвольными значениями. Метод должен позволять передавать
+    Коробку с более чем одним видом параметризации.*/
+
+    public static void putPointInBox(Box<? super Point3D> box) {
+        if (box.isEmpty()) box.setObj(new Point3D(1, 2, 3));
+    }
+
+    /*6.2.4 Заполнение списка. Создайте метод, который принимает список чисел и заполняет его значениями
+    от 1 до 100. Метод должен принимать список с более чем одной параметризацией.*/
+
+    public static void fill(ArrayList<? super Integer> list) {
+        for (int i = 1; i <= 100; i++) {
+            list.add(i);
+        }
+    }
+
+/*    6.3.1 Функция. Разработайте такой метод, который будет принимать список значений типа T, и объект имеющий
+    единственный метод apply. Данный метод надо применить к каждому элементу списка, и вернуть новый список
+    значений типа P, при этом типы T и P могут совпадать, а могут не совпадать.*/
+
+
+    public static <T, P> ArrayList<P> process(ArrayList<T> list, Applier<T, P> applier) {
+        ArrayList<P> result = new ArrayList<>();
+        for (T element : list) {
+            result.add(applier.apply(element));
+        }
+        return result;
+    }
+
+    public interface Applier<T, P> {
+        public P apply(T element);
+
+    }
+
+/*    6.3.2 Фильтр. Разработайте такой метод, который будет принимать список значений типа T и объект имеющий
+    единственный метод test (принимает T и возвращает boolean). Верните новый список типа T, из которого удалены
+    все значения не прошедшие проверку условием.*/
+
+    public static <T> ArrayList<T> filter(ArrayList<T> list, Tester<T> tester) {
+        ArrayList<T> result = new ArrayList<>();
+        for (T element : list) {
+            if (tester.test(element)) result.add(element);
+        }
+        return result;
+    }
+
+    public interface Tester<T> {
+        boolean test(T element);
+    }
+
+/*    6.3.3 Сокращение. Разработайте такой метод, который будет принимать список значений типа T и способ с помощью
+    которого список значений можно свести к одному значению типа T, которое и возвращается из метода.*/
+
+    public static <T> T reduce(ArrayList<T> list, T identity, Reducer<T> reducer) {
+        T result = identity;
+        for (T element : list) {
+            result = reducer.decrease(result, element);
+        }
+        return result;
+    }
+    public interface Reducer<T> {
+        T decrease(T result, T element);
+    }
+
+/*    6.3.4 Коллекционирование. Разработайте такой метод, который будет возвращать коллекцию типа P со значениями типа T. Данный метод будет принимать:
+        1.	Список исходных значений
+        2.	Способ создания результирующей коллекции
+        3.	Способ передачи значений исходного списка в результирующую коллекцию.*/
+
+    public static <T, P extends Collection<?>> P collect(List<T> list, Creator<P> creator, Collector<List<T>, P> collector) {
+        P collection = creator.create();
+        collector.make(list, collection);
+        return collection;
+    }
+
+    public interface Creator<A> {
+        A create();
+    }
+
+    public interface Collector<B, C> {
+        void make(B srcList, C destList);
+    }
+
 }
-
-
-

@@ -2,13 +2,14 @@ package geometry;
 
 import edu.baykov.geometry.Line;
 import edu.baykov.geometry.Point;
+import edu.baykov.geometry.Point3D;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LineTest {
-    Line line;
+    Line<Point> line;
     Point startPoint;
     Point endPoint;
 
@@ -21,18 +22,27 @@ public class LineTest {
 
     @Test
     void cloneTest() throws CloneNotSupportedException {
-
-        Line newLine = line.clone();
+        Line<Point> newLine = line.clone();
 
         assertNotSame(line, newLine);
-        assertNotSame(line.getStartPoint(), newLine.getStartPoint());
-        assertNotSame(line.getEndPoint(), newLine.getEndPoint());
+        assertNotSame(line.getStart(), newLine.getStart());
+        assertNotSame(line.getEnd(), newLine.getEnd());
+    }
+
+    @Test
+    void cloneWithPoint3D() throws CloneNotSupportedException {
+        Line<Point3D> line1 = new Line<>(new Point3D(2, 2, 2), new Point3D(3, 3, 3));
+        Line<Point3D> line2 = line1.clone();
+
+        assertNotSame(line1, line2);
+        assertNotSame(line1.getStart(), line2.getStart());
+        assertNotSame(line1.getEnd(), line2.getEnd());
     }
 
     @Test
     void equalsAndHashCode() {
-        Line line2 = new Line(1, 2, 3, 4);
-        Line line3 = new Line(3, 4, 1, 2);
+        Line<Point> line2 = new Line<>(new Point(1,2),  new Point(3, 4));
+        Line<Point> line3 = new Line<>(new Point(3, 4), new Point(1,2));
 
         assertTrue(line.hashCode() == line2.hashCode() && line.hashCode() == line3.hashCode());
         assertEquals(line, line2);

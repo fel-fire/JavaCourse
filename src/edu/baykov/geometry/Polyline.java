@@ -76,21 +76,15 @@ public class Polyline implements Measurable, TransformableToPolyline {
      * В случае с замкнутыми линиями также не имеет значения из какой точки они начинаются.
      */
     @Override
-    public boolean equals(Object obj) {
+    public final boolean equals(Object obj) {
         if (this == obj) return true;
         if (!(obj instanceof Polyline polyline)) return false;
 
-        ArrayList<Point> pointsOfObj = polyline.getPoints();
         ArrayList<Point> pointsOfThis = getPoints();
-
-        // Из-за того, что в ClosedPolyline не предусмотрено наличие конечной точки, совпадающей с начальной, необходимо
-        // добавлять ее вручную в следующих двух строках. Вероятнее всего, эти строчки целесообразно оставить здесь
-        // и не переопределить в подклассе данный метод.
-        if (obj.getClass() == ClosedPolyline.class) pointsOfObj.add(pointsOfObj.getFirst());
-        if (getClass() == ClosedPolyline.class) pointsOfThis.add(pointsOfThis.getFirst());
+        ArrayList<Point> pointsOfObj = polyline.getPoints();
 
         ArrayList<Line> linesOfThis = asUniqueLinesList(pointsOfThis);
-        ArrayList<Line> linesOfObj = asUniqueLinesList(pointsOfObj);
+        ArrayList<Line> linesOfObj = polyline.asUniqueLinesList(pointsOfObj);
 
         if (linesOfThis.size() != linesOfObj.size()) return false;
 
@@ -117,7 +111,7 @@ public class Polyline implements Measurable, TransformableToPolyline {
     /**
      * Метод, возвращающий список уникальных отрезков из которых состоит ломаная линия
      */
-    private ArrayList<Line> asUniqueLinesList(ArrayList<Point> points) {
+    ArrayList<Line> asUniqueLinesList(ArrayList<Point> points) {
         ArrayList<Line> lines = new ArrayList<>();
         for (int i = 0; i < points.size() - 1; i++) {
             Point startPoint = points.get(i);
