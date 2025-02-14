@@ -17,7 +17,7 @@ public class LineTest {
     void init() {
         startPoint = new Point(1, 2);
         endPoint = new Point(3, 4);
-        line = new Line(startPoint, endPoint);
+        line = Line.of(startPoint, endPoint);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class LineTest {
 
     @Test
     void cloneWithPoint3D() throws CloneNotSupportedException {
-        Line<Point3D> line1 = new Line<>(new Point3D(2, 2, 2), new Point3D(3, 3, 3));
+        Line<Point3D> line1 = Line.of(new Point3D(2, 2, 2), new Point3D(3, 3, 3));
         Line<Point3D> line2 = line1.clone();
 
         assertNotSame(line1, line2);
@@ -41,8 +41,8 @@ public class LineTest {
 
     @Test
     void equalsAndHashCode() {
-        Line<Point> line2 = new Line<>(new Point(1,2),  new Point(3, 4));
-        Line<Point> line3 = new Line<>(new Point(3, 4), new Point(1,2));
+        Line<Point> line2 = Line.of(new Point(1,2),  new Point(3, 4));
+        Line<Point> line3 = Line.of(new Point(3, 4), new Point(1,2));
 
         assertTrue(line.hashCode() == line2.hashCode() && line.hashCode() == line3.hashCode());
         assertEquals(line, line2);

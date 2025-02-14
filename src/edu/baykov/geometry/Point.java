@@ -20,7 +20,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Getter
 @Setter
-public sealed class Point implements Cloneable permits Point3D  {
+public  class Point extends AbstractPoint {
 
     private int x, y;
 
@@ -34,10 +34,6 @@ public sealed class Point implements Cloneable permits Point3D  {
         return "{" + x + "; " + y + "}";
     }
 
-    @Override
-    public Point clone() throws CloneNotSupportedException {
-        return (Point) super.clone();
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -51,4 +47,14 @@ public sealed class Point implements Cloneable permits Point3D  {
     public int hashCode() {
         return Objects.hash(x, y);
     }
+
+    @Override
+    int distanceTo(AbstractPoint end) {
+        double res;
+        if (end instanceof Point point)
+            res = Math.sqrt(Math.pow(point.getX() - getX(), 2) + Math.pow(point.getY() - getY(), 2));
+        else throw new IllegalArgumentException("This point is not instance of Point.class");
+        return (int) res;
+    }
+
 }

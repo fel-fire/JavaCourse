@@ -10,14 +10,12 @@ package edu.baykov.oop;
  */
 public class Storage<T> {
     private final T obj;
-    private final T alternativeValue;
 
-    public Storage(T obj, T alternativeValue) {
+    public Storage(T obj) {
         this.obj = obj;
-        this.alternativeValue = alternativeValue;
     }
 
-    public T getObj() {
+    public T getObj(T alternativeValue) {
         return obj == null? alternativeValue : obj;
     }
 

@@ -80,8 +80,7 @@ public class Student implements Comparable<Student>{
 
 
     @Override
-    public int toCompare(Student obj) {
-        int result = (int) ((averageMark() - obj.averageMark())*100);
-        return Integer.compare(result, 0);
+    public int compareTo(Student obj) {
+        return Double.compare(averageMark(), obj.averageMark());
     }
 }

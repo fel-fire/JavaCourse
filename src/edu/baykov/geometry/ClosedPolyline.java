@@ -39,7 +39,7 @@ public class ClosedPolyline extends Polyline {
         int result = super.length();
         List<Point> tmp = super.getPoints();
         if (tmp.size() <= 2) return result;
-        Line lastLine = new Line(tmp.getLast(), tmp.getFirst());
+        Line lastLine = Line.of(tmp.getLast(), tmp.getFirst());
         return result + lastLine.length();
     }
 

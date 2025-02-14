@@ -20,8 +20,8 @@ import java.util.Objects;
 
 @Getter
 @Setter
-public final class Point3D extends Point {
-    private int z;
+public final class Point3D extends AbstractPoint {
+    private int x, y, z;
 
     /**
      * Конструирует объект класса {@code Point3D}
@@ -30,17 +30,18 @@ public final class Point3D extends Point {
      * @param z координата.
      */
     public Point3D(int x, int y, int z) {
-        super(x, y);
+        this.x = x;
+        this.y = y;
         this.z = z;
     }
 
-    /**
-     * Данный метод возвращает строковое представление объекта
-     * @return строковое представление объекта {@code Point3D} вида {x; y; z}
-     */
     @Override
     public String toString() {
-        return "{" + super.getX() + "; " + super.getX() + "; " + z + "}";
+        return "Point3D{" +
+                "x=" + x +
+                ", y=" + y +
+                ", z=" + z +
+                '}';
     }
 
     @Override
@@ -53,6 +54,16 @@ public final class Point3D extends Point {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), z);
+        return Objects.hash(x, y, z);
     }
+
+    @Override
+    public int distanceTo(AbstractPoint end) {
+            double res;
+            if (end instanceof Point3D point)
+                res = Math.sqrt(Math.pow(point.getX() - getX(), 2) + Math.pow(point.getY() - getY(), 2) + Math.pow(point.getZ() - getZ(), 2));
+            else throw new IllegalArgumentException("This point is not instance of Point3D.class");
+            return (int) res;
+    }
+
 }

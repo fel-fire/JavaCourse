@@ -17,7 +17,7 @@ public class PointTest {
     @Test
     void cloneTest() throws CloneNotSupportedException {
 
-        Point newPoint = point.clone();
+        Point newPoint = (Point) point.clone();
         int testX = newPoint.getX();
         int testY = newPoint.getY();
         newPoint.setX(testX + 10);

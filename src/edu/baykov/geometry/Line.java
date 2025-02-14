@@ -13,23 +13,23 @@ import java.util.Objects;
  * @author   Nikolay Baykov
  * @see Point
  */
-public class Line<T extends Point> implements Measurable, Cloneable {
+public class Line<T extends AbstractPoint> implements Measurable, Cloneable {
 
     private T start;
     private T end;
 
 
-    public Line(@NonNull T startPoint, @NonNull T endPoint) {
-        this.start = startPoint;
-        this.end = endPoint;
-
-        //this(startPoint.getX(), startPoint.getY(), endPoint.getX(), endPoint.getY());
+    private Line(T startPoint, T endPoint) {
+        this.start = (T) startPoint.clone();
+        this.end = (T) endPoint.clone();
+    }
+    public static <V extends AbstractPoint> Line<V> of(@NonNull V startPoint, @NonNull V endPoint) {
+        return new Line<>(startPoint, endPoint);
     }
 
-/*    public Line(int startX, int startY, int endX, int endY) {
-        start = new Point(startX, startY);
-        end = new Point(endX, endY);
-    }*/
+    public static Line<Point> of(int startX, int startY, int endX, int endY) {
+        return new Line<>(new Point(startX, startY), new Point(endX, endY));
+    }
 
     public T getStart() {
         return start;
@@ -48,14 +48,19 @@ public class Line<T extends Point> implements Measurable, Cloneable {
     }
 
     public int length() {
-        return (int) Math.sqrt(Math.pow(end.getX() - start.getX(), 2) + Math.pow(end.getY() - start.getY(), 2));
+        return start.distanceTo(end);
+
     }
 
-    public Line<T> clone() throws CloneNotSupportedException {
-        Line<T> line = (Line<T>) super.clone();
-        line.start = (T) this.start.clone();
-        line.end = (T) this.end.clone();
-        return line;
+    public Line<T> clone() {
+        try {
+            Line<T> line = (Line<T>) super.clone();
+            line.start = (T) this.start.clone();
+            line.end = (T) this.end.clone();
+            return line;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
     }
     @Override
     public String toString() {

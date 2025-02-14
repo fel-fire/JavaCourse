@@ -1,6 +1,8 @@
 package edu.baykov.oop;
 
 import java.util.ArrayList;
+import java.util.List;
+
 /**
  * <p>Класс {@code Stack} представляет реализацию структуру данных типа стек.
  * В классе реализованы методы: {@code push()} (положить элемент сверху), {@code pop()} (забрать элемент сверху),
@@ -8,7 +10,7 @@ import java.util.ArrayList;
  * @author Nikolay Baykov
  */
 public class Stack<T> {
-    private ArrayList<T> stackList = new ArrayList<>();
+    private List<T> stackList = new ArrayList<>();
 
     public void push(T element) {
         stackList.add(element);

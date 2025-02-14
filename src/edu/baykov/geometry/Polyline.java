@@ -35,7 +35,7 @@ public class Polyline implements Measurable, TransformableToPolyline {
     public int length() {
         int result = 0;
         for (int i = 0; i < points.size() - 1; i++) {
-            Line line = new Line(points.get(i), points.get(i+1));
+            Line line = Line.of(points.get(i), points.get(i+1));
             result += line.length();
         }
         return result;
@@ -116,7 +116,7 @@ public class Polyline implements Measurable, TransformableToPolyline {
         for (int i = 0; i < points.size() - 1; i++) {
             Point startPoint = points.get(i);
             Point endPoint = points.get(i+1);
-            Line addedLine = new Line(startPoint, endPoint);
+            Line addedLine = Line.of(startPoint, endPoint);
             if ((startPoint.equals(endPoint)) || lines.contains(addedLine)) continue;
             lines.add(addedLine);
         }

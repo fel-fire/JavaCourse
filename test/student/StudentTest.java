@@ -86,8 +86,8 @@ public class StudentTest {
         Student student2 = new Student("Vasiliy", 4, 4, 4, 4, 4, 4);
         Student student3 = new Student("Petr", 5, 5, 4, 3, 4, 5);
 
-        assertEquals(1, student1.toCompare(student2));
-        assertEquals(-1, student2.toCompare(student3));
-        assertEquals(0, student1.toCompare(student3));
+        assertEquals(1, student1.compareTo(student2));
+        assertEquals(-1, student2.compareTo(student3));
+        assertEquals(0, student1.compareTo(student3));
     }
 }

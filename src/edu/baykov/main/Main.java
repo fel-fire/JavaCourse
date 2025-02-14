@@ -1,5 +1,6 @@
 package edu.baykov.main;
 
+import edu.baykov.geometry.AbstractPoint;
 import edu.baykov.geometry.Line;
 import edu.baykov.geometry.Point;
 import edu.baykov.geometry.Point3D;
@@ -14,6 +15,7 @@ import static java.lang.Integer.parseInt;
 import static java.lang.Math.pow;
 
 import java.util.*;
+import java.util.function.*;
 import java.util.stream.Stream;
 //import edu.baykov.geometry.Point;
 
@@ -124,7 +126,7 @@ public class Main {
     сдвигающей точку начала на 10 единиц по оси X. Например, если X был 5,
     то должен стать 15, если X был -7 то должен стать -17.*/
 
-    public static void move(Line<? extends Point> line) {
+    public static void move(Line<? extends Point3D> line) {
         int startPointX = line.getStart().getX();
         startPointX = startPointX < 0 ? startPointX - 10 : startPointX + 10;
         line.getStart().setX(startPointX);
@@ -164,24 +166,19 @@ public class Main {
     значений типа P, при этом типы T и P могут совпадать, а могут не совпадать.*/
 
 
-    public static <T, P> ArrayList<P> process(ArrayList<T> list, Applier<T, P> applier) {
-        ArrayList<P> result = new ArrayList<>();
+    public static <T, P> List<P> process(List<T> list, Function<T, P> applier) {
+        List<P> result = new ArrayList<>();
         for (T element : list) {
             result.add(applier.apply(element));
         }
         return result;
     }
 
-    public interface Applier<T, P> {
-        public P apply(T element);
-
-    }
-
 /*    6.3.2 Фильтр. Разработайте такой метод, который будет принимать список значений типа T и объект имеющий
     единственный метод test (принимает T и возвращает boolean). Верните новый список типа T, из которого удалены
     все значения не прошедшие проверку условием.*/
 
-    public static <T> ArrayList<T> filter(ArrayList<T> list, Tester<T> tester) {
+    public static <T> List<T> filter(List<T> list, Predicate<T> tester) {
         ArrayList<T> result = new ArrayList<>();
         for (T element : list) {
             if (tester.test(element)) result.add(element);
@@ -189,22 +186,15 @@ public class Main {
         return result;
     }
 
-    public interface Tester<T> {
-        boolean test(T element);
-    }
-
 /*    6.3.3 Сокращение. Разработайте такой метод, который будет принимать список значений типа T и способ с помощью
     которого список значений можно свести к одному значению типа T, которое и возвращается из метода.*/
 
-    public static <T> T reduce(ArrayList<T> list, T identity, Reducer<T> reducer) {
+    public static <T> T reduce(List<T> list, T identity, BinaryOperator<T> reducer) {
         T result = identity;
         for (T element : list) {
-            result = reducer.decrease(result, element);
+            result = reducer.apply(result, element);
         }
         return result;
-    }
-    public interface Reducer<T> {
-        T decrease(T result, T element);
     }
 
 /*    6.3.4 Коллекционирование. Разработайте такой метод, который будет возвращать коллекцию типа P со значениями типа T. Данный метод будет принимать:
@@ -212,14 +202,11 @@ public class Main {
         2.	Способ создания результирующей коллекции
         3.	Способ передачи значений исходного списка в результирующую коллекцию.*/
 
-    public static <T, P extends Collection<?>> P collect(List<T> list, Creator<P> creator, Collector<List<T>, P> collector) {
-        P collection = creator.create();
-        collector.make(list, collection);
+    public static <T, P extends Collection<?>> P collect(List<T> list, Supplier<P> creator, BiConsumer<T, P> collector) {
+        P collection = creator.get();
+        for (T element : list)
+            collector.accept(element, collection);
         return collection;
-    }
-
-    public interface Creator<A> {
-        A create();
     }
 
     public interface Collector<B, C> {
