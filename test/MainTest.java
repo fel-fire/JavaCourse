@@ -204,8 +204,6 @@ public class MainTest {
 
         List<List<Integer>> superList = collect(integers, (Supplier<List<List<Integer>>>) ArrayList::new, MainTest::addPositiveOrNegativeInSublist);
 
-        System.out.println(superList);
-
         assertEquals(2, superList.size());
     }
 
@@ -227,8 +225,6 @@ public class MainTest {
         ArrayList<String> str1 = new ArrayList<>(List.of("qwerty", "asdfg", "zx", "qw"));
 
         List<List<String>> superList = collect(str1, ArrayList::new, MainTest::addWithSameLengthToSublist);
-
-        System.out.println(superList);
 
         assertEquals(3, superList.size());
     }

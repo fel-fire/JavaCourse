@@ -1,6 +1,6 @@
-package oop;
+package fraction;
 
-import edu.baykov.oop.Fraction;
+import edu.baykov.fraction.Fraction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,22 +11,23 @@ public class FractionTest {
 
     @BeforeEach
     void init() {
-        fraction = new Fraction(4, 10);
+        fraction = Fraction.of(4, 10);
     }
 
     @Test
     void cloneTest() throws CloneNotSupportedException {
-        Fraction newFraction =  fraction.clone();
-        assertNotSame(fraction, newFraction);
+        Fraction newFraction = fraction.clone();
+        //assertNotSame(fraction, newFraction);
+        assertSame(fraction, newFraction);
         assertEquals(fraction.getDenominator(), newFraction.getDenominator());
         assertEquals(fraction.getNumerator(), newFraction.getNumerator());
     }
 
     @Test
     void equalsAndHashCode() throws CloneNotSupportedException {
-        Fraction newFraction1 = new Fraction(4, 10);
-        Fraction newFraction2 = new Fraction(4, 10);
-        Fraction newFraction3 = new Fraction(10, 4);
+        Fraction newFraction1 = Fraction.of(4, 10);
+        Fraction newFraction2 = Fraction.of(4, 10);
+        Fraction newFraction3 = Fraction.of(10, 4);
 
         assertEquals(fraction.hashCode(), newFraction1.hashCode());
         assertEquals(fraction, fraction);
@@ -36,4 +37,5 @@ public class FractionTest {
         assertEquals(newFraction2, fraction);
         assertNotEquals(fraction, newFraction3);
     }
+
 }

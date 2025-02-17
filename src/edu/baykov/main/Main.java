@@ -1,13 +1,11 @@
 package edu.baykov.main;
 
-import edu.baykov.geometry.AbstractPoint;
+import edu.baykov.fraction.Fraction;
 import edu.baykov.geometry.Line;
-import edu.baykov.geometry.Point;
 import edu.baykov.geometry.Point3D;
 import edu.baykov.network.Connection;
 import edu.baykov.network.LostConnectionException;
 import edu.baykov.oop.Box;
-import edu.baykov.oop.Storage;
 import edu.baykov.student.InvalidMarksValueException;
 import edu.baykov.student.Student;
 
@@ -16,7 +14,6 @@ import static java.lang.Math.pow;
 
 import java.util.*;
 import java.util.function.*;
-import java.util.stream.Stream;
 //import edu.baykov.geometry.Point;
 
 /**
@@ -27,7 +24,18 @@ import java.util.stream.Stream;
  */
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CloneNotSupportedException {
+
+        Fraction fr1 = Fraction.of(1,2);
+        Fraction fr2 = Fraction.of(1,2);
+        System.out.println(fr1 == fr2);
+        Fraction fr3 = fr1.multiple(1);
+        Fraction fr4 = fr2.sum(0);
+        System.out.println(fr1 == fr3);
+        System.out.println(fr2 == fr4);
+        fr4 = fr4.divide(2);
+        System.out.println(fr2 == fr4);
+
 
     }
 
@@ -207,10 +215,6 @@ public class Main {
         for (T element : list)
             collector.accept(element, collection);
         return collection;
-    }
-
-    public interface Collector<B, C> {
-        void make(B srcList, C destList);
     }
 
 }
