@@ -5,10 +5,11 @@ import edu.baykov.geometry.Line;
 import edu.baykov.geometry.Point3D;
 import edu.baykov.network.Connection;
 import edu.baykov.network.LostConnectionException;
-import edu.baykov.oop.Box;
+import edu.baykov.oop.*;
 import edu.baykov.student.InvalidMarksValueException;
 import edu.baykov.student.Student;
 
+import static edu.baykov.oop.ENameParameter.*;
 import static java.lang.Integer.parseInt;
 import static java.lang.Math.pow;
 
@@ -23,20 +24,41 @@ import java.util.function.*;
  * @author Nikolay Baykov
  */
 
+
+
 public class Main {
     public static void main(String[] args) throws CloneNotSupportedException {
 
-        Fraction fr1 = Fraction.of(1,2);
-        Fraction fr2 = Fraction.of(1,2);
-        System.out.println(fr1 == fr2);
-        Fraction fr3 = fr1.multiple(1);
-        Fraction fr4 = fr2.sum(0);
-        System.out.println(fr1 == fr3);
-        System.out.println(fr2 == fr4);
-        fr4 = fr4.divide(2);
-        System.out.println(fr2 == fr4);
+        // 1 задача
+        LazyStorage<Integer> storage = sum(1,2,3,4,5,6);
+        System.out.println("---------------");
+        int x = storage.getObject(1);
+        System.out.println(x);
+
+        // 2 задача
+        Name name = Name.of(new NameStorage("Ivan", FIRSTNAME), new NameStorage("Kozlov", LASTNAME), new NameStorage("Petrovich", PATRONIMYC));
+        System.out.println(name);
 
 
+
+    }
+
+    public static LazyStorage<Integer> sum(Integer... ints) {
+
+
+        if (ints == null) return LazyStorage.of(null);
+
+        Supplier<Integer> sum = () -> {
+            ArrayList<Integer> list = new ArrayList<>(List.of(ints));
+            int result = 0;
+            for (int i : list) {
+                result += i;
+                System.out.println("counting");
+            }
+            return result;
+        };
+
+        return LazyStorage.of(sum);
     }
 
     /* 3.1.3 Сложение. Разработайте метод, который принимает набор числовых значений и возвращает их

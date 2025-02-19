@@ -44,32 +44,34 @@ public class Name {
         this.lastName = lastName == null ? "" : lastName;
         this.patronymic = patronymic == null ? "" : patronymic;
     }
-    /**
-     * Конструирует объект класса Name из имени. Наличие валидного firstName обязательно.
-     * @param firstName имя человека, не может отсутствовать или быть null.
-     */
     public Name(String firstName) {
         this(firstName, "", "");
     }
-    /**
-     * Конструирует объект класса Name из имени и фамилии. Наличие валидного firstName обязательно.
-     * @param firstName имя человека, не может отсутствовать или быть null.
-     */
     public Name(String firstName, String lastName) {
         this(firstName, lastName, "");
     }
 
     /**
      * Копирующий конструктор.
-     * @param name объект, копию которого необходимо создать.
      */
     Name(Name name) {
        this(name.getFirstName(), name.getLastName(), name.getPatronymic());
     }
-    /**
-     * Метод возвращает строковое представление объекта
-     * @return строковое представление объекта класса Name в виде "Фамилия Имя Отчество".
-     */
+
+
+
+    public static Name of(NameStorage... names) {
+        String fn = "";
+        String ln = "";
+        String p = "";
+        for (NameStorage name : names) {
+            if (name.getNameParameter() == ENameParameter.FIRSTNAME && fn.isEmpty()) fn = name.getName();
+            if (name.getNameParameter() == ENameParameter.LASTNAME && ln.isEmpty()) ln = name.getName();
+            if (name.getNameParameter() == ENameParameter.PATRONIMYC && p.isEmpty()) p = name.getName();
+        }
+        return new Name(fn, ln, p);
+    }
+
     @Override
     public String toString() {
         return String.format("%s %s %s", lastName, firstName, patronymic).trim();
