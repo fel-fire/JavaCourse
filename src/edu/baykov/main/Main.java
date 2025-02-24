@@ -1,7 +1,11 @@
 package edu.baykov.main;
 
-import edu.baykov.fraction.Fraction;
+import edu.baykov.oop.MyStream;
+import edu.baykov.converter.Converter;
+import edu.baykov.converter.StringConverter;
+import edu.baykov.database.Database;
 import edu.baykov.geometry.Line;
+import edu.baykov.geometry.Point;
 import edu.baykov.geometry.Point3D;
 import edu.baykov.network.Connection;
 import edu.baykov.network.LostConnectionException;
@@ -9,12 +13,12 @@ import edu.baykov.oop.*;
 import edu.baykov.student.InvalidMarksValueException;
 import edu.baykov.student.Student;
 
-import static edu.baykov.oop.ENameParameter.*;
 import static java.lang.Integer.parseInt;
 import static java.lang.Math.pow;
 
 import java.util.*;
 import java.util.function.*;
+import java.util.stream.IntStream;
 //import edu.baykov.geometry.Point;
 
 /**
@@ -28,18 +32,6 @@ import java.util.function.*;
 
 public class Main {
     public static void main(String[] args) throws CloneNotSupportedException {
-
-        // 1 задача
-        LazyStorage<Integer> storage = sum(1,2,3,4,5,6);
-        System.out.println("---------------");
-        int x = storage.getObject(1);
-        System.out.println(x);
-
-        // 2 задача
-        Name name = Name.of(new NameStorage("Ivan", FIRSTNAME), new NameStorage("Kozlov", LASTNAME), new NameStorage("Petrovich", PATRONIMYC));
-        System.out.println(name);
-
-
 
     }
 
