@@ -15,7 +15,7 @@ public class MyStreamTest {
     void myStreamAction() {
         List<String> list = new ArrayList<>(List.of("1", "2", "3", "4", "5"));
         MyStream<String> stream = new MyStream<>(list);
-        int result = stream.process(Integer::parseInt)
+        int result = stream.map(Integer::parseInt)
                            .reduce(0, Integer::sum);
 
         assertEquals(15, result);
@@ -26,7 +26,7 @@ public class MyStreamTest {
         List<String> list = new ArrayList<>(List.of("One", "Two", "three", "four", "Five"));
 
         MyStream<String> stream = new MyStream<>(list);
-        int result = stream.filter(s -> Pattern.matches("^[A-Z].*", s)).process(s -> s != null ? 1 : 0).reduce(0, Integer::sum);
+        int result = stream.filter(s -> Pattern.matches("^[A-Z].*", s)).map(s -> s != null ? 1 : 0).reduce(0, Integer::sum);
 
         // ИЛИ
 

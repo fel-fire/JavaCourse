@@ -12,6 +12,8 @@ import edu.baykov.network.LostConnectionException;
 import edu.baykov.oop.*;
 import edu.baykov.student.InvalidMarksValueException;
 import edu.baykov.student.Student;
+import java.util.regex.Pattern;
+
 
 import static java.lang.Integer.parseInt;
 import static java.lang.Math.pow;
@@ -32,6 +34,32 @@ import java.util.stream.IntStream;
 
 public class Main {
     public static void main(String[] args) throws CloneNotSupportedException {
+
+        List<String> list = new ArrayList<>(List.of("1", "2", "3", "4", "5"));
+        MyStream<String> stream = new MyStream<>(list);
+        int result = stream
+                .map(Integer::parseInt)
+                .reduce(0, Integer::sum);
+        System.out.println(result);
+
+
+        List<String> list2 = new ArrayList<>(List.of("One", "two", "Three", "four", "Five"));
+        MyStream<String> stream2 = new MyStream<>(list2);
+
+        List<Integer> result2 = stream2
+                .filter(s -> Pattern.matches("^[A-Z].*", s))
+                .map(s -> 1).collect(ArrayList::new, (x, y) -> y.add(x + 6));
+        //.reduce(0, (res, i) -> res + i);
+        System.out.println(result2);
+
+
+        // или
+
+        MyStream<String> stream3 = new MyStream<>(list2);
+        List<String> result3 = stream3.filter(s -> Pattern.matches("^[A-Z].*", s)).collect(ArrayList::new, (s, l) -> l.add(s));
+        System.out.println(result3);
+
+
 
     }
 
