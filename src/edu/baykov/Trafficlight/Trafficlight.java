@@ -1,17 +1,17 @@
 package edu.baykov.Trafficlight;
 
-import static edu.baykov.Trafficlight.State.*;
+import static edu.baykov.Trafficlight.EState.*;
 
 public class Trafficlight {
     State cur;
 
-    private State tmp = OFFSTATE;
+    private State tmp = OFF_STATE;
 
     State getTmp() {
         return tmp;
     }
 
-    public void setTmp(State tmp) {
+    void setTmp(State tmp) {
         this.tmp = tmp;
     }
 

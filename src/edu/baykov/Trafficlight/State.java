@@ -1,50 +1,18 @@
 package edu.baykov.Trafficlight;
 
-public enum State {
-    OFFSTATE {
-        @Override
-        public void make() {
-            System.out.println("black");
-        }
-        @Override
-        public void next(Trafficlight trafficlight) {
-            trafficlight.cur = this;
-        }
-    },
+import static edu.baykov.Trafficlight.EState.OFF_STATE;
+import static edu.baykov.Trafficlight.EState.RED_STATE;
 
-    REDSTATE {
-        @Override
-        public void make() {
-            System.out.println("red");
-        }
-        @Override
-        public void next(Trafficlight trafficlight) {
-            trafficlight.cur = GREENSTATE;
-        }
-    },
+public interface State {
+    void make();
+    void next(Trafficlight trafficlight);
 
-    GREENSTATE {
-        @Override
-        public void make() {
-            System.out.println("green");
-        }
-        @Override
-        public void next(Trafficlight trafficlight) {
-            trafficlight.cur = REDSTATE;
-        }
-
-    };
-
-    public abstract void make();
-    public abstract void next(Trafficlight trafficlight);
-
-
-    public void off(Trafficlight trafficlight) {
+    default void off(Trafficlight trafficlight) {
         trafficlight.setTmp(trafficlight.cur);
-        trafficlight.cur = OFFSTATE;
+        trafficlight.cur = OFF_STATE;
     }
-    public void on(Trafficlight trafficlight) {
-        trafficlight.cur = trafficlight.getTmp() == OFFSTATE ? REDSTATE : trafficlight.getTmp();
+    default void on(Trafficlight trafficlight) {
+        trafficlight.cur = trafficlight.getTmp() == OFF_STATE ? RED_STATE : trafficlight.getTmp();
     }
-}
 
+}
