@@ -15,7 +15,7 @@ import java.util.Objects;
  * @author   Nikolay Baykov
  */
 @Getter
-public final class Fraction extends Number implements Cloneable {
+public final class Fraction extends Number implements Cloneable, Fractionable {
     private static final List<Fraction> fractionPool = new ArrayList<>();
     private final int numerator;
     private final int denominator;
@@ -28,7 +28,7 @@ public final class Fraction extends Number implements Cloneable {
         this(numerator, 1);
     }*/
 
-    Fraction(int numerator, int denominator) {
+    private Fraction(int numerator, int denominator) {
         if (denominator == 0) throw new IllegalArgumentException("В знаменателе не должен быть 0");
         if (denominator < 0) {
             numerator *= -1;

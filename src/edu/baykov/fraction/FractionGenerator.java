@@ -1,8 +1,5 @@
 package edu.baykov.fraction;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Класс {@code FractionGenerator} представляет реализацию генератора обыкновенной дроби. Может генерировать
  * дроби. Может иметь только один экземпляр класса.
@@ -12,7 +9,6 @@ import java.util.List;
 
 public class FractionGenerator {
     private static FractionGenerator instance;
-
 
     private FractionGenerator() {
     }
