@@ -24,7 +24,7 @@ public  class Point extends AbstractPoint {
 
     private int x, y;
 
-    Point(@NonNull Point point) {
+    public Point(@NonNull Point point) {
         x = point.x;
         y = point.y;
     }

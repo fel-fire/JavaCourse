@@ -4,15 +4,26 @@ import edu.baykov.database.Database;
 import edu.baykov.geometry.Point;
 import org.junit.jupiter.api.Test;
 
+import java.util.function.Function;
+
 public class DatabaseTest {
 
     @Test
     void dataBase() {
 
         Database database = new Database();
-        database.push(1, obj -> "1", obj -> 1);
-        database.push(2, obj -> "TWO", obj -> 2);
-        database.push(new Point(1,3), obj -> "Point with coordinates 1, 3", obj -> new Point(1,3));
+        database.respresentstors.put(Integer.class, (Function<Integer, String>) String::valueOf);
+        database.respresentstors.put(String.class, (Function<String, String>) s -> s);
+        database.respresentstors.put(Point.class, (Function<Point,String>) s -> "This is only some Point");
+        database.extractors.put(Integer.class, Integer::parseInt);
+        database.extractors.put(String.class, s -> s);
+        database.extractors.put(Point.class, s -> new Point(0, 0));
+        System.out.println(database);
+        database.push("1");
+        database.push(1);
+        database.push(new Point(0, 0));
+
+
         System.out.println(database);
 
         String s = database.get(0, String.class);

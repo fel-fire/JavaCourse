@@ -2,7 +2,7 @@ package edu.baykov.database;
 
 import java.util.function.Function;
 
-public class StringRepresentation<T> implements Extractable<T>{
+public class StringRepresentation<T> {
 
     private Function<String, T> extractor;
 
@@ -19,11 +19,6 @@ public class StringRepresentation<T> implements Extractable<T>{
         if (c == String.class) return (T) representation;
         if (c == tClass) return extractor.apply(representation);
         else throw new IllegalArgumentException("Invalid class type");
-    }
-
-    @Override
-    public String toString() {
-        return representation;
     }
 }
 

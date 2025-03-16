@@ -1,6 +1,6 @@
 package oop;
 
-import edu.baykov.oop.MyStream;
+import edu.baykov.oop.DataStream;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -9,12 +9,12 @@ import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MyStreamTest {
+public class DataStreamTest {
 
     @Test
     void myStreamAction() {
         List<String> list = new ArrayList<>(List.of("1", "2", "3", "4", "5"));
-        MyStream<String> stream = new MyStream<>(list);
+        DataStream<String> stream = DataStream.of(list);
         int result = stream.map(Integer::parseInt)
                            .reduce(0, Integer::sum);
 
@@ -25,7 +25,7 @@ public class MyStreamTest {
     void myStreamAction2() {
         List<String> list = new ArrayList<>(List.of("One", "Two", "three", "four", "Five"));
 
-        MyStream<String> stream = new MyStream<>(list);
+        DataStream<String> stream = DataStream.of(list);
         int result = stream.filter(s -> Pattern.matches("^[A-Z].*", s)).map(s -> s != null ? 1 : 0).reduce(0, Integer::sum);
 
         // ИЛИ

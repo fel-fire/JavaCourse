@@ -1,27 +1,26 @@
 package edu.baykov.main;
 
-import edu.baykov.oop.MyStream;
-import edu.baykov.converter.Converter;
-import edu.baykov.converter.StringConverter;
-import edu.baykov.database.Database;
 import edu.baykov.geometry.Line;
 import edu.baykov.geometry.Point;
 import edu.baykov.geometry.Point3D;
+import edu.baykov.geometry.Polyline;
 import edu.baykov.network.Connection;
 import edu.baykov.network.LostConnectionException;
 import edu.baykov.oop.*;
 import edu.baykov.student.InvalidMarksValueException;
 import edu.baykov.student.Student;
-import java.util.regex.Pattern;
 
 
 import static java.lang.Integer.parseInt;
 import static java.lang.Math.pow;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.*;
 import java.util.function.*;
-import java.util.stream.IntStream;
-//import edu.baykov.geometry.Point;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * В указанном классе {@code Main} располагаются решения задач из разделов задачника, которые необходимо было выполнить
@@ -31,37 +30,77 @@ import java.util.stream.IntStream;
  */
 
 
-
 public class Main {
-    public static void main(String[] args) throws CloneNotSupportedException {
+    public static void main(String[] args) throws FileNotFoundException {
 
-        List<String> list = new ArrayList<>(List.of("1", "2", "3", "4", "5"));
-        MyStream<String> stream = new MyStream<>(list);
-        int result = stream
-                .map(Integer::parseInt)
+        //Задачи из раздела 6.3 для тех, кому домашнего задания показалось мало
+        //6.3.1 map()
+        List<Integer> result6_3_1_1 = Stream.of("qwerty", "asdfg", "zx")
+                .map(String::length)
+                .toList();
+        System.out.println("values length: " + result6_3_1_1);
+
+        List<Integer> result6_3_1_2 = Stream.of(1, -3, 7)
+                .map(x -> x < 0? x*(-1) : x)
+                .toList();
+        System.out.println("values to positive: " + result6_3_1_2);
+
+        List<Integer> result6_3_1_3 = Stream.of(new int[] {1, 2, 3}, new int[] {4, 5, 6}, new int[] {7, 8, 3})
+                .map(x -> Arrays.stream(x).max().orElse(0))
+                .toList();
+        System.out.println("maximum from subarrays: " + result6_3_1_3);
+
+        //6.3.2 filter()
+        List<String> result6_3_2_1 = Stream.of("qwerty", "asdfg", "zx")
+                .filter(x -> x.length() < 3)
+                .toList();
+        System.out.println("values with length < 3: " + result6_3_2_1);
+
+        List<Integer> result6_3_2_2 = Stream.of(1, -3, 7)
+                .filter(x -> x < 0)
+                .toList();
+        System.out.println("only negatives: " + result6_3_2_2);
+
+        List<Integer[]> result6_3_2_3 = Stream.of(new Integer[] {1, 2, 3}, new Integer[] {-4, -5, -6}, new Integer[] {7, -8, 3})
+                .filter(x -> Arrays.stream(x).allMatch(y -> y <= 0))
+                .toList();
+        System.out.print("arrays without negative values: ");
+        result6_3_2_3.forEach((x) -> System.out.print(Arrays.toString(x) + " ") );
+        System.out.println();
+
+        //6.3.3 reduce
+        String result6_3_3_1 = Stream.of("qwerty", "asdfg", "zx").reduce("", (x, y) -> x + y);
+        System.out.println("values concatenation: " + result6_3_3_1);
+
+        Integer result6_3_3_2 = Stream.of(1, -3, 7)
                 .reduce(0, Integer::sum);
-        System.out.println(result);
+        System.out.println("sum of values: " + result6_3_3_2);
 
+        int result6_3_3_3 = Stream.of(List.of(1, 2, 3), List.of(1, 2, 3), List.of(1, 2, 3))
+                .flatMap(List::stream)
+                .reduce(0, (x, y) -> x + 1);
+        System.out.println("count of values: " + result6_3_3_3);
 
-        List<String> list2 = new ArrayList<>(List.of("One", "two", "Three", "four", "Five"));
-        MyStream<String> stream2 = new MyStream<>(list2);
+        //6.3.4 collect
+        Map<Boolean, List<Integer>> result6_3_4_1 = Stream.of(1, -3, 7)
+                .collect(Collectors.partitioningBy(x -> x >= 0));
+        List<Integer> positive = result6_3_4_1.get(true);
+        List<Integer> negative = result6_3_4_1.get(false);
+        System.out.print("list with positive values: " + positive + " ");
+        System.out.println("list with negative values: " + negative);
 
-        List<Integer> result2 = stream2
-                .filter(s -> Pattern.matches("^[A-Z].*", s))
-                .map(s -> 1).collect(ArrayList::new, (x, y) -> y.add(x + 6));
-        //.reduce(0, (res, i) -> res + i);
-        System.out.println(result2);
+        Map<Integer, List<String>> result6_3_4_2 = Stream.of("qwerty", "asdfg", "zx", "qw")
+                .collect(Collectors.toMap(String::length, x -> new ArrayList<>(List.of(x)), (x, y) -> {x.addAll(y); return x;}));
+        System.out.println("sublists with same length words : " + result6_3_4_2);
 
+        Set<String> result6_3_4_3 = Stream.of("qwerty", "asdfg", "zx", "qwerty")
+                .collect(Collectors.toSet());
+        System.out.println("set with unique words : " + result6_3_4_3);
 
-        // или
-
-        MyStream<String> stream3 = new MyStream<>(list2);
-        List<String> result3 = stream3.filter(s -> Pattern.matches("^[A-Z].*", s)).collect(ArrayList::new, (s, l) -> l.add(s));
-        System.out.println(result3);
-
-
-
+        // и все равно мало...
     }
+
+
 
     public static LazyStorage<Integer> sum(Integer... ints) {
 
@@ -257,6 +296,44 @@ public class Main {
         for (T element : list)
             collector.accept(element, collection);
         return collection;
+    }
+
+    /* Stream API Задание 1 (тест находится в MainTest):
+    Написать следующую стриму: дан набор объектов типа Point,
+    необходимо взять все Point в разных координатах, (убрать с
+    одинаковыми X,Y),отсортировать по X, отрицательные Y сделать
+    положительными и собрать это все в ломаную (объект типа Polyline)*/
+
+    public static Polyline streamMethodTask1(List<Point> points) {
+
+        return Optional.ofNullable(points).orElse(Collections.emptyList()).stream()
+                .filter(Objects::nonNull)
+                .sorted(Comparator.comparingInt(Point::getX))
+                .peek(x -> x.setY(Math.abs(x.getY())))
+                .distinct()
+                .collect(Polyline::new, Polyline::addPoint, (l1, l2) -> l1.addPoint(l2.getPoints().toArray(new Point[0])));
+    }
+
+   /* Stream API Задание 2 (тест находится в MainTest):
+    Дан текстовый файл с строками содержащими имя человека и его номер в следующей форме:
+    Вася:5
+    Петя:3
+    Аня:5
+    Номера людей могут повторяться.
+    У каких-то людей может не быть номера. Необходимо написать стриму выполняющую следующее:
+    читаются все люди из файла, все имена приводится к нижнему регистру, но с первой буквой в верхнем регистре,
+    убираем из перечня всех людей без номеров, а имена оставшихся группируются по их номеру:
+            [5:[Вася, Аня], 3:[Петя]]*/
+
+    public static Map<String, List<String>> streamMethodTask2(String filename) throws FileNotFoundException {
+
+        return new BufferedReader(new FileReader(filename)).lines()
+                .map(x -> (x.substring(0, 1).toUpperCase() + x.substring(1).toLowerCase()).split(":"))
+                .filter(x -> x.length == 2)
+                .collect(Collectors.toMap(x -> x[1], x -> new ArrayList<>(List.of(x[0])), (x, y) -> {x.addAll(y); return x;}));
+
+                // как вариант можно попробовать сделать вот так
+                //.collect(Collectors.groupingBy(x -> x[1], Collectors.mapping(x -> x[0], Collectors.toList())));
     }
 
 }

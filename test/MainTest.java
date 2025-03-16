@@ -1,11 +1,9 @@
-import edu.baykov.geometry.AbstractPoint;
-import edu.baykov.geometry.Line;
-import edu.baykov.geometry.Point;
-import edu.baykov.geometry.Point3D;
+import edu.baykov.geometry.*;
 import edu.baykov.main.Main;
 import edu.baykov.oop.Box;
 import org.junit.jupiter.api.Test;
 
+import java.io.*;
 import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
@@ -260,4 +258,39 @@ public class MainTest {
         assertEquals(3, set.size());
     }
 
+
+
+    @Test
+        //StreamAPI_Task 1:
+    void streamMethodTask1() {
+        List<Point> points = new ArrayList<>(List.of(
+                new Point(1, -2), new Point(10, -2), new Point(11, -2), new Point(1, 2),
+                new Point(1, -2), new Point(12, -2), new Point(5, 6), new Point(4, -5)));
+        points.add(null);
+
+        String result = Main.streamMethodTask1(points).toString();
+
+        assertEquals("Polyline{points=[{1; 2}, {4; 5}, {5; 6}, {10; 2}, {11; 2}, {12; 2}]}", result);
+    }
+
+    @Test
+        //StreamAPI_Task 1:
+    void streamMethodTask2() throws IOException {
+
+        File myTempFile = File.createTempFile("temp", null);
+        try (PrintWriter writer = new PrintWriter(new FileOutputStream(myTempFile))) {
+            writer.println("ivan:1");
+            writer.println("iVAN:2");
+            writer.println("aLeXAnDer:3");
+            writer.println("Petr:");
+            writer.println("ArKadiy");
+            writer.println("Stanislav:3");
+            writer.println("ignat:2");
+            writer.println("FEDOR:4");
+        }
+
+        String result = Main.streamMethodTask2(myTempFile.getPath()).toString();
+
+        assertEquals("{1=[Ivan], 2=[Ivan, Ignat], 3=[Alexander, Stanislav], 4=[Fedor]}", result);
+    }
 }

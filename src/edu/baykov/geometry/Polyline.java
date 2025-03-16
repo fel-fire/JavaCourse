@@ -23,7 +23,7 @@ public class Polyline implements Measurable, TransformableToPolyline {
     ArrayList<Point> points;
 
     public Polyline(@NonNull Point... points) {
-        if (points.length < 3) throw new IllegalArgumentException("A points should not be less than 3");
+        //if (points.length < 3) throw new IllegalArgumentException("A points should not be less than 3");
         this.points = new ArrayList<>(Arrays.asList(points));
     }
 
