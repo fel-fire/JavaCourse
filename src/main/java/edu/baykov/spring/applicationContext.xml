@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean name="hello" class="java.lang.String">
+        <constructor-arg type="java.lang.String" value = "Hello World!"/>
+    </bean>
+
+    <bean id="RandomInt"
+          class="edu.baykov.spring.RandomIntGenerator"
+          scope="prototype"
+          factory-method="get"/>
+
+    <bean id="xmlDate" name="DateFromXML" class="java.util.Date" lazy-init="true">
+    </bean>
+
+    <bean id="2to5" class="edu.baykov.spring.FromTwoToFive">
+    </bean>
+
+    <bean id="max" class="java.lang.Integer">
+        <constructor-arg value = "1"/>
+    </bean>
+
+    <bean id="min" class="java.lang.Integer">
+    <constructor-arg value = "100"/>
+</bean>
+
+</beans>
