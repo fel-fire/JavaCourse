@@ -1,12 +1,15 @@
-package edu.baykov.annotation;
+package edu.baykov.spring.processor;
 
 import lombok.SneakyThrows;
+import org.springframework.cglib.proxy.Enhancer;
+import org.springframework.cglib.proxy.MethodInterceptor;
+import org.springframework.cglib.proxy.MethodProxy;
 
 import java.lang.reflect.*;
 import java.util.*;
 
 /**
- 8.3.6. Обработчик аннотации {@code @Cache}, со следующими характеристиками:
+ 9.3.5 Обработчик аннотации {@code @Cache}, со следующими характеристиками:
  принимаtn произвольный набор объектов по ссылкам типа T.
  Кэширование выполняется только для тех объектов, которые проаннотированы с помощью @Cache.
  •	Если для аннотации задан набор строк, то они учитываются как названия
@@ -20,93 +23,78 @@ public class CacheAnnotationProcessor {
      * метод возвращает в виде списка.
      */
     @SneakyThrows
-    public static <T> List<T> cache(T... objects) {
-        List<T> cachedList = new ArrayList<>();
-        for (T object : objects) {
-            Class<T> objClass = (Class<T>) object.getClass();
-            if (objClass.isAnnotationPresent(Cache.class)) {
-                T proxy = (T) Proxy.newProxyInstance(
-                        objClass.getClassLoader(),
-                        objClass.getInterfaces(),
-                        new CacheHandler(object)
-                );
-                cachedList.add(proxy);
-            }
-        }
-        return cachedList;
+    public static Object cache(Object object) {
+        return Enhancer.create(object.getClass(), new CacheMethodInterceptor(object));
     }
 }
-
 /**
  * Обработчик для прокси, выполняющий функцию кеширования
  */
-
-class CacheHandler implements InvocationHandler {
-    Object object;
+class CacheMethodInterceptor implements MethodInterceptor {
+    private Object object;
     /**
      * Кэш результатов выполнения методов
      */
-    Map<Method, Object> cache = new HashMap<>();
+    private Map<Method, Object> cache = new HashMap<>();
     /**
      * Состояние объекта на момент создания прокси
      */
-    Map<Field, Object> objectCondition = new HashMap<>();
+    private Map<Field, Object> objectCondition = new HashMap<>();
 
 
-    public CacheHandler(Object object) {
+    CacheMethodInterceptor(Object object) {
         this.object = object;
         getFields(object);
 
     }
 
     /**
-     * invoke метод, проверяет наличие у объекта аннотации и ее параметры,
+     * intercept метод, проверяет наличие у объекта аннотации и ее параметры,
      * вызывает метод объекта с кэшированием, либо без него.
      */
 
     @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-
+    public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
         Class<?> objClass = object.getClass();
         Cache annotation = objClass.getAnnotation(Cache.class);
         String[] methodNames = annotation.value();
-
         if (methodNames.length == 0)
-            return simpleCache(method);
+            return simpleCache(method, args);
         else {
             for (String name : methodNames) {
-                if (method.getName().equals(name)) return simpleCache(method);
+                if (method.getName().equals(name)) return simpleCache(method, args);
             }
         }
-        return method.invoke(object);
+        return method.invoke(object, args);
     }
 
     /**
      * Метод реализующий использование кэша и его заполнение
      */
-    private Object simpleCache(Method method) throws IllegalAccessException, InvocationTargetException {
+    private Object simpleCache(Method method, Object... args) throws IllegalAccessException, InvocationTargetException {
         if (cache.containsKey(method) && !isModified()) {
             System.out.println("get value from cache");
             return cache.get(method);
         }
         else {
-            Object result = method.invoke(object);
+            Object result = method.invoke(object, args);
             if (method.getReturnType() != void.class) cache.put(method, result);
             return result;
         }
     }
 
     /**
-     * Метод, собирающий значения всех полей класса, полей всех объектов, являющихся полями класса, в том числе для унаследованных полей.
+     * Метод, собирающий значения всех полей класса, полей всех объектов, являющихся полями класса, в том числе
+     * для полей полей.
      * Указанные значения помещаются в objectCondition с ключем в виде своего поля Field.
      */
     @SneakyThrows
     private void getFields(Object object) {
-        Class clazz = object.getClass();
+        Class<?> clazz = object.getClass();
         while (clazz != null) {
             Field[] fields = clazz.getDeclaredFields();
             for (Field f : fields) {
-                Class type = f.getType();
+                Class<?> type = f.getType();
                 if (type.isPrimitive() || type == String.class || isWrapper(type)) {
                     objectCondition.put(f, f.get(object));
                 } else {
@@ -116,7 +104,6 @@ class CacheHandler implements InvocationHandler {
                     getFields(subObject);
                 }
             }
-
             clazz = clazz.getSuperclass();
         }
     }
@@ -127,6 +114,7 @@ class CacheHandler implements InvocationHandler {
      */
     @SneakyThrows
     private boolean isModified() {
+        boolean result = false;
         for (Map.Entry<Field, Object> entry : objectCondition.entrySet()) {
             Field key = entry.getKey();
             Object value = key.get(object);
@@ -134,10 +122,10 @@ class CacheHandler implements InvocationHandler {
             if (Objects.nonNull(value) && !value.equals(expected) ||
                     Objects.isNull(value) && null != expected) {
                 objectCondition.put(key, value);
-                return true;
+                result = true;
             }
         }
-        return false;
+        return result;
     }
 
     /**
@@ -154,6 +142,7 @@ class CacheHandler implements InvocationHandler {
                 type == Boolean.class ||
                 type == Character.class;
     }
+
 }
 
 
