@@ -6,5 +6,5 @@ package edu.baykov.spring.trafficlight;
  */
 public interface TrafficlightMode {
     State changeState();
-    State setOFF_STATE();
+    State setOffState();
 }

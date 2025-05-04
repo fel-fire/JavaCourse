@@ -1,12 +1,8 @@
 package edu.baykov.spring.trafficlight;
 
-/**
- * 9.2.7 Настройка светофора. Реализация интерфейса текущего состояния
- * светофора через Enum
- */
 
 
-public enum EState implements State{
+public enum EColor {
     OFF_STATE {
         @Override
         public String toString() {
@@ -42,10 +38,7 @@ public enum EState implements State{
         }
     };
 
-    @Override
-    public void info() {
-        System.out.println(this);
-    }
+
 }
 
 

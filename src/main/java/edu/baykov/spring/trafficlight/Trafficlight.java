@@ -14,12 +14,12 @@ import org.springframework.stereotype.Service;
 @Scope("prototype")
 public class Trafficlight {
     @Getter
-    State currentState;
-    TrafficlightMode mode;
+    private State currentState;
+    private TrafficlightMode mode;
 
     public Trafficlight(TrafficlightMode mode) {
         this.mode = mode;
-        this.currentState = mode.setOFF_STATE();
+        this.currentState = mode.setOffState();
     }
 
     public void next() {
@@ -28,7 +28,7 @@ public class Trafficlight {
     }
 
     public void off() {
-        currentState = mode.setOFF_STATE();
+        currentState = mode.setOffState();
         currentState.info();
     }
 
